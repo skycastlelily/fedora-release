@@ -28,7 +28,6 @@ class Settings:
     BEAKER_JOB_DEFAULTS = {
         'job-group': 'libvirt-ci',
         'job-whiteboard': 'fedora-release-autotest',
-        'job-packages': ['libselinux-python', 'gmp-devel', 'xz-devel'],
         'job-ksappend': DEFAULT_KS_APPEND
     }  # TODO: Shouldn't be here, will move it to a better place later
 

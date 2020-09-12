@@ -7,10 +7,12 @@ import asyncio
 from . import beaker
 from . import exceptions as exc
 from . import log
+from . import conf_test_cases
 from .log import logger
 from .settings import Settings
 #config.conf.setup_logging()
 import os
+import re
 
 def _find_true_body(message):
     """Currently the ZMQ->AMQP bridge produces a message with the
@@ -62,9 +64,9 @@ def consume_message(message):
 
 def populate_data(data):
 
-    driver_list = Settings.Driver_List
-    ks_list = Settings.Ks_List
-    hw_testcases = Settings.Hw_TestCase
+    driver_list = conf_test_cases.Driver_List
+    ks_list = conf_test_cases.Ks_List
+    hw_testcases = conf_test_cases.Hw_TestCase
     data_list = []
     base_http_url = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
     base_nfs_url = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
@@ -77,7 +79,8 @@ def populate_data(data):
         temp["device_drivers"] = driver
         temp["ts_name"] = hw_testcases[driver]
         data_list.append(temp)
-    for ts_name, params in ks_list.items():
+    for ks_data in ks_list:
+        (ts_name , params), = ks_data.items()
         temp = copy.deepcopy(data)
         arch = temp["cpu-arch"]
         temp["ts_name"] = ts_name
@@ -87,24 +90,14 @@ def populate_data(data):
             previous = int(release_number) - 1 
             repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(previous, arch)
             temp['kernel_options'] = "inst.repo=%s"%repo_url
-            download_url = os.path.join(base_branched_url, tmp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
+            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
                         "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
+
             temp['ks_appends'] = """
-                                    %post
-                                    wget %s
-                                    %end 
-                                    
+                                 %%post
+                                 wget %s
+                                 %%end 
                                  """%download_url
-        if ts_name == "QA:Testcase_Install_to_Current_KVM":
-            download_url = os.path.join(base_branched_url, tmp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
-                        "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
-            temp['ks_appends'] = """
-                                    %post
-                                    wget %s
-                                    %end 
-                                    
-                                 """%download_url
-        if ts_name == "QA:Testcase_Anaconda_updates.img_via_URL":
         if ts_name == "QA:Testcase_Anaconda_updates.img_via_URL":
             temp['kernel_options'] = "inst.updates=https://fedorapeople.org/groups/qa/updates/updates-openqa.img"
         if ts_name == "QA:Testcase_install_repository_HTTP/FTP_variation":
@@ -123,7 +116,6 @@ def populate_data(data):
 async def process_data(data):
 
     data_list = populate_data(data)
-
     tasks = [beaker.process(data) for data in data_list]
     await asyncio.gather(*tasks)
 
@@ -137,14 +129,21 @@ class Consumer:
 
     def __call__(self, message):
 
-        try:
+        if 'we' == 'we':
             log.logger_init()
             logger.info(message)
-            data = consume_message(message)
+            #data = consume_message(message)
+            data = { "cpu-arch": "x86_64",
+                     "beaker-distro": "Fedora-33-20200912.n.0",
+                     "distro_variant": "Server",
+                     "system-type": "baremetal",
+                     "do_report": "true",
+                     "wiki_hostname": "fedoraproject.org",
+                   }
 
             if data:
                 #We have to give beaker some time to sync the repo
-                time.sleep(4800)
+             #   time.sleep(4800)
                 asyncio.run(process_data(data))
-        except Exception as e:
-            logger.error("consumer failed: %s"%e)
+      #  except Exception as e:
+       #     logger.error("consumer failed: %s"%e)

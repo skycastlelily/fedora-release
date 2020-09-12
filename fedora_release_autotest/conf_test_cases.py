@@ -22,6 +22,184 @@
 """This module contains data for mapping openQA jobs to Wikitcms test
 instances.
 """
+
+Ks_List = [
+    { "QA:Testcase_Boot_default_install": {
+        "beaker-distro_variant": "Server",
+        "device_description": "UEFI",
+        }},
+    {"QA:Testcase_Boot_default_install": {
+        "beaker-distro_variant": "Server",
+        "device_description": "BIOS",
+        }},
+    {"QA:Testcase_Boot_default_install": {
+        "beaker-distro_variant": "Everything",
+        "device_description": "UEFI",
+        }},
+    { "QA:Testcase_Boot_default_install": {
+        "beaker-distro_variant": "Everything",
+        "device_description": "BIOS",
+        }},
+    {"QA:Testcase_Boot_Methods_Pxeboot": {
+        "cpu-arch": "x86_64",
+        }},
+    {"QA:Testcase_Boot_Methods_Pxeboot": {
+        "cpu-arch": "aarch64",
+        }},
+    {"QA:Testcase_partitioning_guided_delete_all": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type lvm",
+        "device_description": "BIOS",
+        }},
+    {"QA:Testcase_partitioning_guided_delete_all": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type lvm",
+        "device_description": "UEFI",
+        }},
+    {"QA:Testcase_partitioning_guided_encrypted": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --encrypted --passphrase fedoratest123",
+        "device_description": "BIOS",
+        }},
+    {"QA:Testcase_partitioning_guided_encrypted": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --encrypted --passphrase fedoratest123",
+        "device_description": "UEFI",
+        }},
+    {"QA:Testcase_partitioning_guided_encrypted": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --encrypted --passphrase fedoratest123",
+        "cpu-arch": "aarch64",
+        }},
+    {"QA:Testcase_partitioning_custom_btrfs": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_btrfs": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_btrfs": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_lvmthin": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type thinp",
+        }},
+    {"QA:Testcase_partitioning_custom_lvmthin": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type thinp",
+        }},
+    {"QA:Testcase_partitioning_custom_lvmthin": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type thinp",
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=ext3 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=ext3 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=ext3 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=xfs --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=xfs --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=xfs
+                     part / --fstype=xfs --grow
+                     """
+        }},
+    {"QA:Testcase_install_repository_HTTP/FTP_variation": {
+        "kernel_options": "",
+        }},
+    {"QA:Testcase_install_repository_NFS_variation": {
+        "kernel_options": "",
+        }},
+    {"QA:Testcase_install_repository_NFSISO_variation": {
+        "kernel_options": "",
+        }},
+    {"QA:Testcase_Package_Sets_Minimal_Package_Install": {
+        "beaker-distro_variant": "Everything",
+        "ks_append": """
+                     %packages
+                     @^minimal
+                     %end
+                     """
+        }},
+    {"QA:Testcase_Asian_Language_Install": {
+        "ks_append": "lang zh_CN.UTF-8",
+        }},
+    {"QA:Testcase_Anaconda_updates.img_via_URL": {
+        "kernel_options": "",
+        }},
+    ]
+
+Driver_List = ["pata", "sata", "raid", "scsi", "sas"]
+
+
+Hw_TestCase = {
+    "pata": "QA:Testcase_install_to_PATA",
+    "sata": "QA:Testcase_install_to_SATA",
+    "scsi": "QA:Testcase_install_to_SCSI",
+    "sas": "QA:Testcase_install_to_SAS",
+    "raid": "QA:Testcase_install_to_RAID",
+}
+
 TESTCASES = {
     # the following strings in values will be replaced with strings
     # derived from openQA job settings, this is used for e.g. to get

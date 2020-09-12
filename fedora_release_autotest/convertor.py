@@ -106,7 +106,7 @@ def boilerplate_job(query: dict):
     # Group up jobs for better tracking and management
 
     whiteboard = etree.SubElement(job, 'whiteboard')
-    whiteboard.text = query.get('whiteboard', DEFAULTS['job-whiteboard'])  # TODO: value from query
+    whiteboard.text = query.get('ts_name', DEFAULTS['job-whiteboard'])  # TODO: value from query
 
     return job
 
@@ -156,7 +156,7 @@ def fill_repos(repos: Element, query: dict):
     """
     repo_default = {
                     "name": "restraint-rawhide",
-                    "url": "https://beaker-project.org/yum/harness/FedoraRawhide/",
+                    "baseurl": "https://beaker-project.org/yum/harness/FedoraRawhide/",
                    }
     repo_list = query.get('yum_repos') or []
     repo_list.append(repo_default)
@@ -193,7 +193,7 @@ def fill_packages(root: Element, query: dict):
     """
     Fill packages element for beaker job XML according to parameters
     """
-    pkg_names = set(DEFAULTS['job-packages'])
+    pkg_names = []
     packages = query.get('packages')
     if packages:
         if isinstance(packages, list):
@@ -342,11 +342,11 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     task_param.set('value', str(reserve_time))
 
     sanitized_query['lifespan'] = reserve_time
-    if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM"
+    if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/kvm_install')
         task.set('role', 'STANDALONE')
-    if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Current_KVM"
+    if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Current_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/kvm_install')
         task.set('role', 'STANDALONE')
@@ -359,7 +359,7 @@ def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
 
     # Some default params
     if sanitized_query.get('ks_meta'):
-        recipe.set('ks_meta', sanitized_query["ks_meta"] + "no_default_harness_repo")
+        recipe.set('ks_meta', sanitized_query["ks_meta"] + " no_default_harness_repo")
     else:
         recipe.set('ks_meta', "no_default_harness_repo")
     if sanitized_query.get('kernel_options'):

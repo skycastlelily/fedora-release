@@ -6,7 +6,15 @@ def wiki_report(data, result):
     wiki_hostname= data["wiki_hostname"]
     do_report=data["do_report"]
     name = ''
+    firmware = 'BIOS'
     imagetype = 'netinst'
+    testtype = ''
+    testname = ''
+    testcase = ''
+    bootmethod = 'x86_64 BIOS'
+    section = ''
+    env = ''
+    subvariant = data.get('beaker-distro_variant') or 'Server'
     if data.get('device_description') == 'BIOS':
         bootmethod = 'x86_64 BIOS'
         firmware = 'BIOS'
@@ -16,7 +24,6 @@ def wiki_report(data, result):
     if data.get('cpu-arch') == 'aarch64':
         bootmethod = 'ARM'
         firmware = 'ARM'
-    subvariant = data.get('beaker-distro_variant')
     if do_report:
         for key, value in conf_test_cases.TESTCASES.items():
             if key == data["ts_name"]:
@@ -32,8 +39,8 @@ def wiki_report(data, result):
                 section = changed["section"]
                 env = changed["env"]
                 testname = changed.get('name', '')
-                # we only pass one testcase each time,so we break here to save time
                 break
+                # we only pass one testcase each time,so we break here to save time
         testcases = []
         testcase = ResTuple(
             testtype=testtype, testcase=testcase, testname=testname, section=section,

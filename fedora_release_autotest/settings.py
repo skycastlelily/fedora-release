@@ -66,35 +66,35 @@ class Settings(object):
             },
         "QA:Testcase_Install_to_Previous_KVM": {
             "cpu-arch": "x86_64",
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "device_description": "BIOS",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },
         "QA:Testcase_Install_to_Previous_KVM": {
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "cpu-arch": "x86_64",
             "device_description": "UEFI",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },
         "QA:Testcase_Install_to_Previous_KVM": {
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "cpu-arch": "aarch64",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },
         "QA:Testcase_Install_to_Current_KVM": {
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "cpu-arch": "x86_64",
             "device_description": "BIOS",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },
         "QA:Testcase_Install_to_Current_KVM": {
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "cpu-arch": "x86_64",
             "device_description": "UEFI",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },
         "QA:Testcase_Install_to_Current_KVM": {
-            "cpu-flags": ["vmx", ]
+            "cpu-flags": ["vmx", ],
             "cpu-arch": "aarch64",
             "packages": ["wget", "libvirt", "qemu-kvm", "virt-install"],
             },

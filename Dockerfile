@@ -1,6 +1,9 @@
 FROM fedora:latest
 RUN dnf -y install fedora-messaging pip beaker-client git gcc python-devel 
-RUN git clone https://github.com/skycastlelily/fedora-release-autotest.git
+COPY conf /fedora-release-autotest/conf
+COPY fedora_release_autotest /fedora-release-autotest/fedora_release_autotest
+COPY setup.py /fedora-release-autotest/
+COPY install.requires /fedora-release-autotest/
 WORKDIR /fedora-release-autotest
 RUN pip install --force-reinstall .
 RUN sed -e "s/[0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}/$(uuidgen)/g" conf/fedora-release-autotest.toml > /var/my.toml
