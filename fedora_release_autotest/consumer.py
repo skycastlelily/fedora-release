@@ -129,21 +129,15 @@ class Consumer:
 
     def __call__(self, message):
 
-        if 'we' == 'we':
+        try:
             log.logger_init()
             logger.info(message)
-            #data = consume_message(message)
-            data = { "cpu-arch": "x86_64",
-                     "beaker-distro": "Fedora-33-20200912.n.0",
-                     "distro_variant": "Server",
-                     "system-type": "baremetal",
-                     "do_report": "true",
-                     "wiki_hostname": "fedoraproject.org",
-                   }
+            data = consume_message(message)
 
             if data:
+
                 #We have to give beaker some time to sync the repo
-             #   time.sleep(4800)
+                time.sleep(4800)
                 asyncio.run(process_data(data))
-      #  except Exception as e:
-       #     logger.error("consumer failed: %s"%e)
+        except Exception as e:
+            logger.error("consumer failed: %s"%e)

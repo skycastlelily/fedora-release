@@ -337,7 +337,7 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     task_param = etree.SubElement(task_params, 'param')
     task_param.set('name', 'RSTRNT_DISABLED')
     task_param.set('value', '01_dmesg_check 10_avc_check')
-    reserve_time = sanitized_query.get('provision-lifespan', 3600)
+    reserve_time = sanitized_query.get('provision-lifespan', 7200)
     task_param.set('name', 'RESERVETIME')
     task_param.set('value', str(reserve_time))
 

@@ -132,7 +132,6 @@ async def pull_beaker_job(job_id: str):
                 success = True
                 return recipes
             else:
-                logger.info("installing or queued")
                 pass  # recipes pending, keep pulling
 
     finally:
