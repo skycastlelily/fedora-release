@@ -311,6 +311,7 @@ async def process(data):
     (recipe ,job_id) = await provision_loop(data)
     if is_recipes_failed([recipe,]):
         bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
+        logger.error("Testcase %s failed!"%data["ts_name"])
         logger.error("Job failed,check %s for more information"%bkr_job_url)
     else:
         logger.info("Job succeed,reporting results to wiki page.")
