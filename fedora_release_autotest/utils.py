@@ -14,6 +14,7 @@ def wiki_report(data, result):
     bootmethod = 'x86_64 BIOS'
     section = ''
     env = ''
+    arch = data.get('cpu-arch') or 'x86_64'
     subvariant = data.get('beaker-distro_variant') or 'Server'
     if data.get('device_description') == 'BIOS':
         bootmethod = 'x86_64 BIOS'
@@ -30,6 +31,7 @@ def wiki_report(data, result):
                 changed = {}
                 for k, v in value.items():
                     v = v.replace('$FIRMWARE$', firmware)
+                    v = v.replace('$RUNARCH$', arch)
                     v = v.replace('$BOOTMETHOD$', bootmethod)
                     v = v.replace('$SUBVARIANT$', subvariant)
                     v = v.replace('$IMAGETYPE$', imagetype)

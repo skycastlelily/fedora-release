@@ -86,6 +86,7 @@ Ks_List = [
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype="xfs"  --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part btrfs.355 --fstype="btrfs"  --size=15360
                      btrfs none --label=fedora_fedora00 btrfs.355
                      btrfs / --subvol --name=root LABEL=fedora_fedora00
@@ -96,6 +97,7 @@ Ks_List = [
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype="xfs"  --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part btrfs.355 --fstype="btrfs"  --size=15360
                      btrfs none --label=fedora_fedora00 btrfs.355
                      btrfs / --subvol --name=root LABEL=fedora_fedora00
@@ -128,7 +130,8 @@ Ks_List = [
         "device_description": "UEFI",
         "ks_meta": "no_autopart",
         "ks_append": """
-                     part /boot --fstype=xfs
+                     part /boot --fstype=xfs --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part / --fstype=ext3 --grow
                      """
         }},
@@ -136,7 +139,8 @@ Ks_List = [
         "cpu-arch": "aarch64",
         "ks_meta": "no_autopart",
         "ks_append": """
-                     part /boot --fstype=xfs
+                     part /boot --fstype=xfs --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part / --fstype=ext3 --grow
                      """
         }},
@@ -152,7 +156,8 @@ Ks_List = [
         "device_description": "UEFI",
         "ks_meta": "no_autopart",
         "ks_append": """
-                     part /boot --fstype=xfs
+                     part /boot --fstype=xfs --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part / --fstype=xfs --grow
                      """
         }},
@@ -160,7 +165,8 @@ Ks_List = [
         "cpu-arch": "aarch64",
         "ks_meta": "no_autopart",
         "ks_append": """
-                     part /boot --fstype=xfs
+                     part /boot --fstype=xfs --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
                      part / --fstype=xfs --grow
                      """
         }},
