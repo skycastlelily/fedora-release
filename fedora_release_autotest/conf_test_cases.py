@@ -183,7 +183,7 @@ Ks_List = [
         "beaker-distro_variant": "Everything",
         "ks_append": """
                      %packages
-                     @^minimal
+                     @^minimal-environment
                      %end
                      """
         }},
