@@ -52,6 +52,12 @@ def consume_message(message):
     if 'updates-testing' in compstr:
         logger.info("Not scheduling jobs for updates-testing %s", compstr)
         return []
+    if 'updates' in compstr:
+        logger.info("Not scheduling jobs for updates %s", compstr)
+        return []
+    if 'Fedora-Container' in compstr:
+        logger.info("Not scheduling jobs for Fedora-Container %s", compstr)
+        return []
     if 'FINISHED' in status and location:
         data = { 
             "cpu-arch": release_arch,
