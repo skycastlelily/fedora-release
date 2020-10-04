@@ -314,7 +314,7 @@ async def process(data):
         logger.error("Testcase %s failed!"%data["ts_name"])
         logger.error("Job failed,check %s for more information"%bkr_job_url)
     else:
-        logger.info("Job succeed,reporting results to wiki page.")
+        logger.info("Job succeed,reporting %s result to wiki page."%data["ts_name"])
         try:
             wiki_report(data=data, result='pass')
         except Exception as e:
