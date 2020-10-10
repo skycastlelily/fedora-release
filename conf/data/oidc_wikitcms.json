@@ -1,1 +1,0 @@
-{"06cd59660d8e48c7872f9ac26cafb243": {"access_token": "2bd273f7-f2f6-4825-a2de-7ba56b392f9d_9ST4FDxN3WqfvRe5Wuilye6ya9s-uJVOcWmcqdkHOe9szSlG7_omkmlDY61I4xQK", "refresh_token": "", "expires_at": 1600918035.9132075, "idp": "https://id.fedoraproject.org/openidc/", "token_type": "Bearer", "scopes": ["openid", "https://fedoraproject.org/wiki/api"]}}
