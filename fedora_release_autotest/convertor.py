@@ -145,9 +145,29 @@ def fill_ks_appends(root: Element, sanitized_query: dict):
     """
     Fill ks appends element for beaker job XML according to parameters
     """
+    ks_append = etree.SubElement(root, 'ks_append')
+    ks_default_txt = """
+                     %post
+                     mkdir -p /root/.ssh
+                     cat >>/root/.ssh/authorized_keys <<"__EOF__"
+                     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrszUwqjVzrY63uACIPSZZaFVwhtdENKH4RV/VqZ2+gX6rEYHHdpI4bN4QhDDWJQMGscda2U3sKfznaCyMjicC8hEdsJJgECLJ9nirb1xMt1hR9ib1bC6QVLK+8ya5z0g2W/Kc/WkRsOS9N3WMEvajG7DQe2LqudBlV7jcmAoDN5DJfugbKFh63OabaMmgU1H41m7eidghuH2yEyCuWh/eDFnoKFAlvzOgk2g8z4ZQF94r6HIwDRcWvfYsbSovESOvxqZbB0AWhaLQIvP/z2EQUmyxRM2hpqKolN09C0BMbBck4v8WUayCzzUPpWeWgGBwuRwlHi7widzHJN6tU7+l root@dhcp-128-28.nay.redhat.com
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPt5PFhuDW6t9o+P9s+K1SnsNiSVQI/XZTwcicT8MvwBywOApYnZRUcFDLwrKoaQKw9XM8f37FLrv4ATPoOxloZKBJc5tDmHvdqDsk/+PrbHjIe084qZm9MB3vYCeLipp1vzOAsTfcDB9LQNOVdjHpdJPtWZtPiOXll6Wptb+l05nsbyoQdEgcT+2qsY5eOq9AezEF5eQtmpRr1kKCtPOiwctJor385Fj9sQP+Gu9JxnHAyaejIfPkBWSAuf2qZye/bFiOOxG1V227HfZYGPB+nP8GT011z7g7eCWwi9gwlxymZZMbTqaPHNtzLQXENNZxsv3O2pDOuAW4zMYEPh8D lnie@localhost.localdomain
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNsTH/PFfjfLLiHq19Rm9KZIOaOp56qMDLmJ1AoZJ+H3D0ux37XsxafCbT6Hcs9A2XnGLv/vnPMlAQ4ZZB1ZXlv82e43N1DVwROZd3ocbX8AylM1nYX0Lu/RHvyegRa4abeJ4pwvaX7FfABaJA0YTTnpOXBjmmbDkNbZpV+SMpJdLloEm+onaKgkWVts97q0DKRlpDXvYQRWPcoPo/OzG569eQ6shrV48VUW2vPDPkoFu9wz2cX4AZCNMdXadqSDtI9eE18Q03Qe0w6YvqnL0vhqncKktfjBJ/EVLGof3cnStvgvG+oB/IjFCd/rTjSAgTAmwDBOSNmchdnCLgRkKH root@dhcp-128-196.nay.redhat.com
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBk+jcz8XU4Z2b23yo1AblYZiZm+elHtA9UzwwYa47fBop1yW2Mq3BtTCESYnX75uy5yF0RoQO2Q1oq5buhk5DJpE+nHniSBan//nleRPf06llpu2s8G4Qo0SWJ929gvEK6TlIxgD9wKljeieKTSi8cgtO7XD/RHrwvKJGCNUwhtPnjQQxUrcZDItRYycjJYN+Z8JBj21+R84fkpcr+f/HpYge5o3aBUS2PRdwc+82aHGTIdQ9p2JuNMyseOPfXfANJH0vQkAKWXnT7WNSSGaQs5QdsABYu0mHwsqlem/eoyCydzF8Lh8g8mPFTvs6Op3mI8iVU9noQRSrVXAhcAbn root@192.168.1.10
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC5tLd4HtMCv8pnycEPP/DTDo+jST29UJnSNUad1OEkRHGMlyFVXv2eHGpKgQxlDa2MH7R2kO+EPI8ThvYRF/kHSZdYtzsfCxzYDewuWJo9JrKbcUN0WGIdNJ3+1U8/4G43CLmMg2i6OTXr9n6rGAf1FpNDOe2wm5DbhQY7UKF6OgLPOy6Dz7CAd8jAxLi2KngWx/z7LqOS40Y/lC/cMXqaX5i3xHNQLMjAdVqw65fLgdQBCHuR1ltJ94BLsrxF1i7Bs138WmSVQS8WIXdPJLLbPRQ8VbJYoFRM5zrkVAnmPcl/w7GyQ1OfU1zm3FAsUByAQCaI5gHtjpb0r5NbXL8vj9zwGVdUKOnx/5Cd2HH0JkdBRxCv8hwTW9+H8XAm4qSbVN3mR+lH95rl6u8XdfPzUiwmkpSjWtYlJVS1RHZLtCmK5jE+jd3L8/zeN9HP0lCH+nbqUyfDTrTuUOjVHR/0xSglnOpR6OuEbQsD34yenPOTweMtoLrMYS+j9m1N9aM= root@bogon
+__EOF__
+                     restorecon -R /root/.ssh
+                     chmod go-w /root /root/.ssh /root/.ssh/authorized_keys
+                     sed -i '/^#PermitRootLogin /s/^#//' /etc/ssh/sshd_config
+                     sed -i 's|PermitRootLogin .*|PermitRootLogin yes|' /etc/ssh/sshd_config
+                     systemctl restart sshd
+                     %end
+                     """
+
     if sanitized_query.get('ks_append'):
-        ks_append = etree.SubElement(root, 'ks_append')
-        ks_append.text = etree.CDATA(sanitized_query['ks_append'])
+        ks_append.text = etree.CDATA(sanitized_query['ks_append'] + ks_default_txt)
+    else:
+        ks_append.text = etree.CDATA(ks_default_txt)
 
 
 def fill_repos(repos: Element, query: dict):
