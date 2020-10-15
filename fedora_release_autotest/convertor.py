@@ -350,19 +350,6 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     task_param.set('name', 'RSTRNT_DISABLED')
     task_param.set('value', '01_dmesg_check 10_avc_check')
 
-    task = etree.SubElement(recipe, 'task')
-    task.set('name', '/distribution/reservesys')
-    task.set('role', 'STANDALONE')
-    task_params = etree.SubElement(task, 'params')
-    task_param = etree.SubElement(task_params, 'param')
-    task_param2 = etree.SubElement(task_params, 'param')
-    task_param.set('name', 'RSTRNT_DISABLED')
-    task_param.set('value', '01_dmesg_check 10_avc_check')
-    reserve_time = sanitized_query.get('provision-lifespan', 7200)
-    task_param2.set('name', 'RESERVETIME')
-    task_param2.set('value', str(reserve_time))
-
-    sanitized_query['lifespan'] = reserve_time
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/kvm_install')
@@ -371,6 +358,11 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/kvm_install')
         task.set('role', 'STANDALONE')
+    
+    reserve = etree.SubElement(recipe, 'reservesys')
+    reserve.set('duration', '86400')
+    reserve.set('when', 'onfail')
+
 
 
 def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
