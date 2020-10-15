@@ -174,12 +174,7 @@ def fill_repos(repos: Element, query: dict):
     """
     Fill repos element for beaker job XML according to parameters
     """
-    repo_default = {
-                    "name": "restraint-rawhide",
-                    "baseurl": "https://beaker-project.org/yum/harness/FedoraRawhide/",
-                   }
     repo_list = query.get('yum_repos') or []
-    repo_list.append(repo_default)
     if repo_list and isinstance(repo_list, list):
         for repo_dict in repo_list:
             repo = etree.SubElement(repos, 'repo')
@@ -372,9 +367,7 @@ def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
 
     # Some default params
     if sanitized_query.get('ks_meta'):
-        recipe.set('ks_meta', sanitized_query["ks_meta"] + " no_default_harness_repo")
-    else:
-        recipe.set('ks_meta', "no_default_harness_repo")
+        recipe.set('ks_meta', sanitized_query["ks_meta"])
     if sanitized_query.get('kernel_options'):
         recipe.set('kernel_options', sanitized_query['kernel_options'])
 
