@@ -347,11 +347,11 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
 
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM":
         task = etree.SubElement(recipe, 'task')
-        task.set('name', '/fedora/kvm_install')
+        task.set('name', '/fedora/virt/kvm-install')
         task.set('role', 'STANDALONE')
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Current_KVM":
         task = etree.SubElement(recipe, 'task')
-        task.set('name', '/fedora/kvm_install')
+        task.set('name', '/fedora/virt/kvm-install')
         task.set('role', 'STANDALONE')
     
     reserve = etree.SubElement(recipe, 'reservesys')

@@ -46,6 +46,40 @@ Ks_List = [
     {"QA:Testcase_Boot_Methods_Pxeboot": {
         "cpu-arch": "aarch64",
         }},
+    {"QA:Testcase_Install_to_Previous_KVM": {
+        "cpu-arch": "x86_64",
+        "cpu-flags": ["vmx", ],
+        "device_description": "BIOS",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_Install_to_Previous_KVM": {
+        "cpu-flags": ["vmx", ],
+        "cpu-arch": "x86_64",
+        "device_description": "UEFI",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_Install_to_Previous_KVM": {
+        "cpu-flags": ["vmx", ],
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_Install_to_Current_KVM": {
+        "cpu-flags": ["vmx", ],
+        "cpu-arch": "x86_64",
+        "device_description": "BIOS",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_Install_to_Current_KVM": {
+        "cpu-flags": ["vmx", ],
+        "cpu-arch": "x86_64",
+        "device_description": "UEFI",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_Install_to_Current_KVM": {
+        "cpu-flags": ["vmx", ],
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
     {"QA:Testcase_partitioning_guided_delete_all": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type lvm",

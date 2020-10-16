@@ -94,14 +94,22 @@ def populate_data(data):
             temp[key] = value
         if ts_name == "QA:Testcase_Install_to_Previous_KVM":
             previous = int(release_number) - 1 
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(previous, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
+            temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['beaker-family'] = 'Fedora' + str(previous)
             download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
                         "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
 
             temp['ks_appends'] = """
                                  %%post
-                                 wget %s
+                                 wget %s -P /var/lib/libvirt/images/
+                                 %%end
+                                 """%download_url
+        if ts_name == "QA:Testcase_Install_to_Current_KVM":
+            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
+                        "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
+            temp['ks_appends'] = """
+                                 %%post
+                                 wget %s -P /var/lib/libvirt/images/
                                  %%end 
                                  """%download_url
         if ts_name == "QA:Testcase_Anaconda_updates.img_via_URL":
