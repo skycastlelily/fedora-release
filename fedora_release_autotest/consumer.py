@@ -112,6 +112,30 @@ def populate_data(data):
                                  wget %s -P /var/lib/libvirt/images/
                                  %%end 
                                  """%download_url
+        if ts_name == "QA:Testcase_upgrade_dnf_current_workstation":
+            current = int(release_number) - 1
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(current, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
+        if ts_name == "QA:Testcase_upgrade_dnf_previous_workstation":
+            previous = int(release_number) - 2
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(previous, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
+        if ts_name == "QA:Testcase_upgrade_dnf_current_server":
+            current = int(release_number) - 1
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(current, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
+        if ts_name == "QA:Testcase_upgrade_dnf_previous_server":
+            previous = int(release_number) - 2
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(previous, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
+        if ts_name == "QA:Testcase_upgrade_dnf_current_minimal":
+            current = int(release_number) - 1
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(current, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
+        if ts_name == "QA:Testcase_upgrade_dnf_previous_minimal":
+            previous = int(release_number) - 2
+            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(previous, arch)
+            temp['kernel_options'] = "inst.repo=%s"%repo_url
         if ts_name == "QA:Testcase_Anaconda_updates.img_via_URL":
             temp['kernel_options'] = "inst.updates=https://fedorapeople.org/groups/qa/updates/updates-openqa.img"
         if ts_name == "QA:Testcase_install_repository_HTTP/FTP_variation":

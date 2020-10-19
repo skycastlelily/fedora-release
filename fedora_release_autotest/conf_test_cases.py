@@ -227,6 +227,106 @@ Ks_List = [
                      %end
                      """
         }},
+    {"QA:Testcase_upgrade_dnf_current_workstation": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_current_workstation": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_workstation": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_workstation": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_current_server": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Server",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_upgrade_dnf_current_server": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Server",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_server": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Server",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_server": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Server",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        }},
+    {"QA:Testcase_upgrade_dnf_current_minimal": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_current_minimal": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_minimal": {
+        "cpu-arch": "x86_64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
+    {"QA:Testcase_upgrade_dnf_previous_minimal": {
+        "cpu-arch": "aarch64",
+        "beaker-distro_variant": "Everything",
+        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
     {"QA:Testcase_Asian_Language_Install": {
         "ks_append": "lang zh_CN.UTF-8",
         }},

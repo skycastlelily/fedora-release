@@ -14,6 +14,13 @@ from .settings import Settings
 
 
 DEFAULTS = Settings.BEAKER_JOB_DEFAULTS
+UPGRADE_LIST = ["QA:Testcase_upgrade_dnf_current_workstation",
+                "QA:Testcase_upgrade_dnf_previous_workstation",
+                "QA:Testcase_upgrade_dnf_current_server",
+                "QA:Testcase_upgrade_dnf_previous_server",
+                "QA:Testcase_upgrade_dnf_current_minimal",
+                "QA:Testcase_upgrade_dnf_previous_minimal"
+                ]
 
 
 ACCEPT_PARAMS = {
@@ -352,6 +359,10 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Current_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/virt/kvm-install')
+        task.set('role', 'STANDALONE')
+    if sanitized_query["ts_name"] in UPGRADE_LIST:
+        task = etree.SubElement(recipe, 'task')
+        task.set('name', '/fedora/upgrade/dnf')
         task.set('role', 'STANDALONE')
     
     reserve = etree.SubElement(recipe, 'reservesys')
