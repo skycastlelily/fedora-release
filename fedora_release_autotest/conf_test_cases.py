@@ -328,7 +328,13 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_Asian_Language_Install": {
-        "ks_append": "lang zh_CN.UTF-8",
+        "beaker-distro_variant": "Everything",
+        "ks_append": """
+                     lang zh_CN.UTF-8
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
         }},
     {"QA:Testcase_Anaconda_updates.img_via_URL": {
         "kernel_options": "",
