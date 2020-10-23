@@ -46,6 +46,9 @@ Ks_List = [
     {"QA:Testcase_Boot_Methods_Pxeboot": {
         "cpu-arch": "aarch64",
         }},
+    {"QA:Testcase_install_to_NVMe": {
+        "cpu-arch": "aarch64",
+        }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
@@ -341,10 +344,11 @@ Ks_List = [
         }},
     ]
 
-Driver_List = ["pata", "sata", "raid", "scsi", "sas"]
+Driver_List = ["nvme", "pata", "sata", "raid", "scsi", "sas"]
 
 
 Hw_TestCase = {
+    "nvme": "QA:Testcase_install_to_NVMe",
     "pata": "QA:Testcase_install_to_PATA",
     "sata": "QA:Testcase_install_to_SATA",
     "scsi": "QA:Testcase_install_to_SCSI",
