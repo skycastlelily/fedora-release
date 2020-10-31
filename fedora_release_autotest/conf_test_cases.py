@@ -53,40 +53,38 @@ Ks_List = [
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
         "device_description": "BIOS",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
         "device_description": "UEFI",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Previous_KVM": {
-        "cpu-flags": ["vmx", ],
         "cpu-arch": "aarch64",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Current_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
         "device_description": "BIOS",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Current_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
         "device_description": "UEFI",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Current_KVM": {
-        "cpu-flags": ["vmx", ],
         "cpu-arch": "aarch64",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_partitioning_guided_delete_all": {
@@ -233,7 +231,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_current_workstation": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^workstation-product-environment
@@ -243,7 +241,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_current_workstation": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^workstation-product-environment
@@ -253,7 +251,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_previous_workstation": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^workstation-product-environment
@@ -263,7 +261,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_previous_workstation": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^workstation-product-environment
@@ -273,27 +271,27 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_current_server": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Server",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         }},
     {"QA:Testcase_upgrade_dnf_current_server": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Server",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         }},
     {"QA:Testcase_upgrade_dnf_previous_server": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Server",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         }},
     {"QA:Testcase_upgrade_dnf_previous_server": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Server",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         }},
     {"QA:Testcase_upgrade_dnf_current_minimal": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^minimal-environment
@@ -303,7 +301,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_current_minimal": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^minimal-environment
@@ -313,7 +311,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_previous_minimal": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^minimal-environment
@@ -323,7 +321,7 @@ Ks_List = [
     {"QA:Testcase_upgrade_dnf_previous_minimal": {
         "cpu-arch": "aarch64",
         "beaker-distro_variant": "Everything",
-        "packages": ["wget", "beakerlib", "rhts-test-env" ],
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
                      %packages
                      @^minimal-environment

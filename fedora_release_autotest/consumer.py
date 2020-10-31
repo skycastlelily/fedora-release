@@ -99,55 +99,80 @@ def populate_data(data):
             download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
                         "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
 
-            temp['ks_appends'] = """
+            temp['ks_append'] = """
                                  %%post
                                  wget %s -P /var/lib/libvirt/images/
                                  %%end
                                  """%download_url
         if ts_name == "QA:Testcase_Install_to_Current_KVM":
-            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
+            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"],
                         "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_number, compose_name)
-            temp['ks_appends'] = """
+            temp['ks_append'] = """
                                  %%post
                                  wget %s -P /var/lib/libvirt/images/
-                                 %%end 
+                                 %%end
                                  """%download_url
-        if ts_name == "QA:Testcase_upgrade_dnf_current_workstation":
-            current = int(release_number) - 1
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(current, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-        if ts_name == "QA:Testcase_upgrade_dnf_previous_workstation":
-            previous = int(release_number) - 2
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(previous, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-        if ts_name == "QA:Testcase_upgrade_dnf_current_server":
-            current = int(release_number) - 1
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(current, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
         if ts_name == "QA:Testcase_upgrade_dnf_previous_server":
             previous = int(release_number) - 2
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Server", "%s", "os")%(previous, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-        if ts_name == "QA:Testcase_upgrade_dnf_current_minimal":
+            temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['beaker-family'] = 'Fedora' + str(previous)
+            temp['ks_append'] = """
+                                 %%post
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 %%end
+                                 """%release_number
+        if ts_name == "QA:Testcase_upgrade_dnf_current_server":
             current = int(release_number) - 1
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(current, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
+            temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['beaker-family'] = 'Fedora' + str(current)
+            temp['ks_append'] = """
+                                 %%post
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 %%end
+                                 """%release_number
+        if ts_name == "QA:Testcase_upgrade_dnf_previous_workstation":
+            previous = int(release_number) - 2
+            temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['ks_append'] = """
+                                 %%post
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 systemctl enable sshd
+                                 %%end
+                                 """%release_number
+        if ts_name == "QA:Testcase_upgrade_dnf_current_workstation":
+            current = int(release_number) - 1
+            temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['ks_append'] = """
+                                 %%post
+                                 systemctl enable sshd
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 %%end
+                                 """%release_number
         if ts_name == "QA:Testcase_upgrade_dnf_previous_minimal":
             previous = int(release_number) - 2
-            repo_url = os.path.join(base_released_url, "F-%s", "GOLD/Everything", "%s", "os")%(previous, arch)
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-        if ts_name == "QA:Testcase_Anaconda_updates.img_via_URL":
-            temp['kernel_options'] = "inst.updates=https://fedorapeople.org/groups/qa/updates/updates-openqa.img"
-        if ts_name == "QA:Testcase_install_repository_HTTP/FTP_variation":
-            repo_url = os.path.join(base_http_url, data["beaker-distro"], 'Server', data["cpu-arch"], 'os')
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-            # choose servers in bos so that we can make sure inst.repo dose work
-            temp['location'] = "US"
-        elif ts_name == "QA:Testcase_install_repository_NFS_variation":
-            repo_url = os.path.join(base_nfs_url, data["beaker-distro"], 'Server', data["cpu-arch"], 'os')
-            temp['kernel_options'] = "inst.repo=%s"%repo_url
-            # choose servers in bos so that we can make sure inst.repo dose work
-            temp['location'] = "US"
+            temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['ks_append'] = """
+                                 %%post
+                                 systemctl enable sshd
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 %%end
+                                 """%release_number
+        if ts_name == "QA:Testcase_upgrade_dnf_current_minimal":
+            current = int(release_number) - 1
+            temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['ks_append'] = """
+                                 %%post
+                                 systemctl enable sshd
+                                 dnf install restraint-rhts -y
+                                 echo %s > /root/release
+                                 %%end
+                                 """%release_number
+
         data_list.append(temp)
     return data_list
 

@@ -202,6 +202,9 @@ def fill_distro_requires(root: Element, query: dict):
     if query.get('beaker-distro'):
         requirements.append('distro_name = ' + query.get('beaker-distro'))
 
+    if query.get('beaker-family'):
+        requirements.append('distro_family = ' + query.get('beaker-family'))
+
     requirements.append('distro_variant = ' + (query.get('beaker-distro_variant') or 'Server'))
 
     for requirement in requirements:
