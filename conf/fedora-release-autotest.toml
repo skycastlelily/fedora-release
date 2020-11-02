@@ -35,6 +35,7 @@ routing_keys = ["org.fedoraproject.prod.pungi.compose.status.change"]
 [consumer_config]
 wiki_hostname = "fedoraproject.org"
 release_arch = "x86_64"
+recent_release = "33"
 do_report = true
 
 [tls]
