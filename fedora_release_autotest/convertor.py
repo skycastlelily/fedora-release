@@ -113,7 +113,10 @@ def boilerplate_job(query: dict):
     # Group up jobs for better tracking and management
 
     whiteboard = etree.SubElement(job, 'whiteboard')
-    whiteboard.text = query.get('ts_name', DEFAULTS['job-whiteboard'])  # TODO: value from query
+    if query.get('device_description'):
+        whiteboard.text = query.get('ts_name')+' '+query.get('cpu-arch')+' '+query.get('device_description')
+    else:
+        whiteboard.text = query.get('ts_name')+' '+query.get('cpu-arch')
 
     return job
 
@@ -376,7 +379,12 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
 
 def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
     # Some default params
-    recipe.set('whiteboard', sanitized_query["ts_name"])  # TODO
+    if sanitized_query.get('device_description'):
+        whiteboard_sum = sanitized_query.get('ts_name')+' '+sanitized_query.get('cpu-arch')+' '+sanitized_query.get('device_description')
+    else:
+        whiteboard_sum = sanitized_query.get('ts_name')+' '+sanitized_query.get('cpu-arch')
+
+    recipe.set('whiteboard', whiteboard_sum)  # TODO
     recipe.set('role', 'None')
 
     # Some default params
