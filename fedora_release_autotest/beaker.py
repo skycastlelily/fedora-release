@@ -298,10 +298,10 @@ async def get_beaker_job_real_start_time(job_id: str):
 async def provision_loop(sanitized_query):
         job_xml = query_to_xml(sanitized_query)
         recipes = None
-        for failure_count in range(3):
+        for failure_count in range(6):
             job_id = await submit_beaker_job(job_xml)
             recipes = await pull_beaker_job(job_id)
-            if recipes is None and failure_count != 3:
+            if recipes is None and failure_count != 6:
                 logger.error("Provision failed, retrying")
             else:
                 break
