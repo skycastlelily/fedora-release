@@ -97,6 +97,28 @@ Ks_List = [
         "ks_append": "autopart --type lvm",
         "device_description": "UEFI",
         }},
+    {"QA:Testcase_partitioning_guided_multi_select": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "packages": ["wget", "beakerlib"],
+        "device_description": "BIOS",
+        "ks_append": """
+                     clearpart --all
+                     ignoredisk --only-use=sda
+                     autopart --type lvm
+                     """
+        }},
+    {"QA:Testcase_partitioning_guided_multi_select": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "device_description": "UEFI",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": """
+                     clearpart --all
+                     ignoredisk --only-use=sda
+                     autopart --type lvm
+                     """
+        }},
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --encrypted --passphrase fedoratest123",
@@ -110,6 +132,27 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --encrypted --passphrase fedoratest123",
+        "cpu-arch": "aarch64",
+        }},
+    {"QA:Testcase_partitioning_guided_multi_empty_all": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": "autopart --type lvm",
+        "device_description": "BIOS",
+        }},
+    {"QA:Testcase_partitioning_guided_multi_empty_all": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": "autopart --type lvm",
+        "device_description": "UEFI",
+        }},
+    {"QA:Testcase_partitioning_guided_multi_empty_all": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": "autopart --type lvm",
         "cpu-arch": "aarch64",
         }},
     {"QA:Testcase_partitioning_custom_btrfs": {
