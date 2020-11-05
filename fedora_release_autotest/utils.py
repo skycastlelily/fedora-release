@@ -23,8 +23,8 @@ def wiki_report(data, result):
         bootmethod = 'x86_64 UEFI'
         firmware = 'UEFI'
     if data.get('cpu-arch') == 'aarch64':
-        bootmethod = 'ARM'
-        firmware = 'ARM'
+        bootmethod = 'aarch64'
+        firmware = 'aarch64'
     if do_report:
         for key, value in conf_test_cases.TESTCASES.items():
             if key == data["ts_name"]:
