@@ -97,6 +97,11 @@ Ks_List = [
         "ks_append": "autopart --type lvm",
         "device_description": "UEFI",
         }},
+    {"QA:Testcase_partitioning_guided_delete_all": {
+        "ks_meta": "no_autopart",
+        "ks_append": "autopart --type lvm",
+        "cpu-arch": "aarch64",
+        }},
     {"QA:Testcase_partitioning_guided_multi_select": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
@@ -185,6 +190,53 @@ Ks_List = [
                      part btrfs.355 --fstype="btrfs"  --size=15360
                      btrfs none --label=fedora_fedora00 btrfs.355
                      btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=ext4 --size=1024
+                     part / --fstype=ext4 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=ext4  --size=1024
+                     part /boot/efi --fstype=ext4  --size=1024
+                     part / --fstype=ext4 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype=ext4  --size=1024
+                     part /boot/efi --fstype=ext4  --size=1024
+                     part / --fstype=ext4 --grow
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_lvm_ext4": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     autopart --type lvm --fstype=ext4
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_lvm_ext4": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     autopart --type lvm --fstype=ext4
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_lvm_ext4": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     autopart --type lvm --fstype=ext4
                      """
         }},
     {"QA:Testcase_partitioning_custom_lvmthin": {
