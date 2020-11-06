@@ -637,6 +637,16 @@ TESTCASES = {
         "env": "$BOOTMETHOD$",
         "type": "Installation",
     },
+    "QA:Testcase_partitioning_custom_standard_partition_ext4": {
+        "section": "Custom storage configuration",
+        "env": "$BOOTMETHOD$",
+        "type": "Installation",
+    },
+    "QA:Testcase_partitioning_custom_lvm_ext4": {
+        "section": "Custom storage configuration",
+        "env": "$BOOTMETHOD$",
+        "type": "Installation",
+    },
     "QA:Testcase_partitioning_custom_lvmthin": {
         "section": "Custom storage configuration",
         "env": "$BOOTMETHOD$",
