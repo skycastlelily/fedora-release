@@ -102,26 +102,36 @@ Ks_List = [
         "ks_append": "autopart --type lvm",
         "cpu-arch": "aarch64",
         }},
-    {"QA:Testcase_partitioning_guided_multi_select": {
+    {"QA:Testcase_partitioning_guided_multi_select_pre": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
-        "packages": ["wget", "beakerlib"],
         "device_description": "BIOS",
+        "packages": ["wget", "beakerlib"],
         "ks_append": """
-                     clearpart --all
-                     ignoredisk --only-use=sda
-                     autopart --type lvm
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --grow --ondisk=sda
                      """
         }},
-    {"QA:Testcase_partitioning_guided_multi_select": {
+    {"QA:Testcase_partitioning_guided_multi_select_pre": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
         "device_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
-                     clearpart --all
-                     ignoredisk --only-use=sda
-                     autopart --type lvm
+                     part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --grow --ondisk=sda
+                     """
+        }},
+    {"QA:Testcase_partitioning_guided_multi_select_pre": {
+        "disk-number": {"$gt": "2"},
+        "ks_meta": "no_autopart",
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": """
+                     part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --grow --ondisk=sda
                      """
         }},
     {"QA:Testcase_partitioning_guided_encrypted": {
@@ -436,6 +446,27 @@ Ks_List = [
         "kernel_options": "",
         }},
     ]
+
+Ks_List_Two = [
+    {"ts_name": "QA:Testcase_partitioning_guided_multi_select",
+     "ks_meta": "no_autopart",
+     "packages": ["wget", "beakerlib"],
+     "target-host": "",
+     "cpu-arch": "",
+     "beaker-distro": "",
+     "system-type": "baremetal",
+     "do_report": "True",
+     "wiki_hostname": "fedoraproject.org",
+     "resultsdb_url": "http://resultsdb01.qa.fedoraproject.org/resultsdb_api/api/v2.0/",
+     "recent_release": "",
+     "ks_append": """
+                  clearpart --all --initlabel
+                  ignoredisk --only-use=sda
+                  autopart --type lvm
+                  """
+    },
+
+]
 
 Driver_List = ["nvme", "pata", "sata", "raid", "scsi", "sas"]
 

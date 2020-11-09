@@ -10,7 +10,7 @@ from .utils import wiki_report
 from wikitcms.wiki import ResTuple
 from lxml import etree
 from .convertor import convert_query_to_beaker_xml
-
+from . import conf_test_cases
 logger = logging.getLogger(__name__)
 
 
@@ -314,6 +314,32 @@ async def process(data):
         logger.error("Testcase %s failed!"%data["ts_name"])
         logger.error("Job failed,check %s for more information"%bkr_job_url)
     else:
+        if data["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
+            data["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
+            job_dic  = conf_test_cases.Ks_List_Two[0]
+            job_dic["target-host"] = recipe["system"]
+            job_dic["cpu-arch"] = data["cpu-arch"]
+            job_dic["beaker-distro"] = data["beaker-distro"]
+            job_xml = query_to_xml(job_dic)
+            recipes = None
+            for failure_count in range(6):
+                job_id = await submit_beaker_job(job_xml)
+                recipes = await pull_beaker_job(job_id)
+                if recipes is None and failure_count != 6:
+                    logger.error("Provision failed, retrying")
+                else:
+                    break
+            if is_recipes_failed([recipe,]):
+                bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
+                logger.error("Testcase %s failed!"%data["ts_name"])
+                logger.error("Job failed,check %s for more information"%bkr_job_url)
+            else:
+                logger.info("Job succeed,reporting %s result to wiki page."%data["ts_name"])
+                try:
+                    wiki_report(data=data, result='pass')
+                except Exception as e:
+                    logger.error("wiki_report failed:%s"%e)
+            return
 
         logger.info("Job succeed,reporting %s result to wiki page."%data["ts_name"])
         try:
