@@ -134,6 +134,33 @@ Ks_List = [
                      part / --fstype="xfs" --grow --ondisk=sda
                      """
         }},
+    {"QA:Testcase_partitioning_guided_free_space_pre": {
+        "ks_meta": "no_autopart",
+        "device_description": "BIOS",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": """
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --size=10240 --ondisk=sda
+                     """
+        }},
+    {"QA:Testcase_partitioning_guided_free_space_pre": {
+        "ks_meta": "no_autopart",
+        "device_description": "UEFI",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": """
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --size=10240 --ondisk=sda
+                     """
+        }},
+    {"QA:Testcase_partitioning_guided_free_space_pre": {
+        "ks_meta": "no_autopart",
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib"],
+        "ks_append": """
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --size=10240 --ondisk=sda
+                     """
+        }},
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --encrypted --passphrase fedoratest123",
@@ -464,6 +491,16 @@ Ks_List_Two = [
                   ignoredisk --only-use=sda
                   autopart --type lvm
                   """
+    },
+    {"ts_name": "QA:Testcase_partitioning_guided_free_space",
+     "packages": ["wget", "beakerlib"],
+     "target-host": "",
+     "cpu-arch": "",
+     "beaker-distro": "",
+     "system-type": "baremetal",
+     "do_report": "True",
+     "wiki_hostname": "fedoraproject.org",
+     "resultsdb_url": "http://resultsdb01.qa.fedoraproject.org/resultsdb_api/api/v2.0/",
     },
 
 ]

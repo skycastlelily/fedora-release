@@ -295,52 +295,88 @@ async def get_beaker_job_real_start_time(job_id: str):
                 raise
     return datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
 
+async def submit_function(data, recipe):
+
+    for i in range(len(conf_test_cases.Ks_List_Two)):
+        if data["ts_name"] == conf_test_cases.Ks_List_Two[i]["ts_name"]:
+            job_str = conf_test_cases.Ks_List_Two[i]
+    job_str["target-host"] = recipe["system"]
+    job_str["cpu-arch"] = data["cpu-arch"]
+    job_str["beaker-distro"] = data["beaker-distro"]
+    job_str["device_description"] = data.get("device_description")
+    job_xml = query_to_xml(job_str)
+    job_id = await submit_beaker_job(job_xml)
+    return job_id
+
+
 async def provision_loop(sanitized_query):
         job_xml = query_to_xml(sanitized_query)
         recipes = None
+        recipe = None
+        func_id = None
         for failure_count in range(6):
             job_id = await submit_beaker_job(job_xml)
+            if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
+                sanitized_query["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
+                while True:
+                    await asyncio.sleep(60)
+                    recipe = await fetch_job_recipes(job_id)
+                    if recipe.get("system"):
+                        break
+                func_id = await submit_function(sanitized_query, recipe)
+            if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_free_space_pre":
+                sanitized_query["ts_name"] = "QA:Testcase_partitioning_guided_free_space"
+                while True:
+                    await asyncio.sleep(60)
+                    recipe = await fetch_job_recipes(job_id)
+                    if recipe.get("system"):
+                        break
+                func_id = await submit_function(sanitized_query, recipe)
             recipes = await pull_beaker_job(job_id)
+
             if recipes is None and failure_count != 6:
                 logger.error("Provision failed, retrying")
+                await cancel_beaker_job(func_id)
+
             else:
                 break
+
+        if func_id:
+            # prepare job succeed
+            if recipes:
+                recipes = await pull_beaker_job(func_id)
+                # task job failed,retry
+                if recipes is None:
+                    for failure_count in range(2):
+                        job_id =  await submit_function(sanitized_query, recipe)
+                        recipes = await pull_beaker_job(job_id)
+                        if recipes is None and failure_count != 2:
+                            logger.error("Provision failed, retrying")
+                # task job succeed
+                else:
+                    job_id = func_id
+            else:
+                bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
+                logger.error("Job failed,check %s for more information"%bkr_job_url)
+                job_id = func_id
+                #set the task job as failed if prepare job failed
+                recipes = None
+                #cancel task job
+                await cancel_beaker_job(job_id)
         return (recipes, job_id)
+
 
 async def process(data):
     (recipe ,job_id) = await provision_loop(data)
+    if data["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
+        data["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
+    if data["ts_name"] == "QA:Testcase_partitioning_guided_free_space_pre":
+        data["ts_name"] = "QA:Testcase_partitioning_guided_free_space"
     if is_recipes_failed([recipe,]):
         bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
         logger.error("Testcase %s failed!"%data["ts_name"])
         logger.error("Job failed,check %s for more information"%bkr_job_url)
     else:
-        if data["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
-            data["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
-            job_dic  = conf_test_cases.Ks_List_Two[0]
-            job_dic["target-host"] = recipe["system"]
-            job_dic["cpu-arch"] = data["cpu-arch"]
-            job_dic["beaker-distro"] = data["beaker-distro"]
-            job_xml = query_to_xml(job_dic)
-            recipes = None
-            for failure_count in range(6):
-                job_id = await submit_beaker_job(job_xml)
-                recipes = await pull_beaker_job(job_id)
-                if recipes is None and failure_count != 6:
-                    logger.error("Provision failed, retrying")
-                else:
-                    break
-            if is_recipes_failed([recipe,]):
-                bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
-                logger.error("Testcase %s failed!"%data["ts_name"])
-                logger.error("Job failed,check %s for more information"%bkr_job_url)
-            else:
-                logger.info("Job succeed,reporting %s result to wiki page."%data["ts_name"])
-                try:
-                    wiki_report(data=data, result='pass')
-                except Exception as e:
-                    logger.error("wiki_report failed:%s"%e)
-            return
-
         logger.info("Job succeed,reporting %s result to wiki page."%data["ts_name"])
         try:
             wiki_report(data=data, result='pass')

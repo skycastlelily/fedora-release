@@ -378,6 +378,14 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/multi/select')
         task.set('role', 'STANDALONE')
+    if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_free_space_pre":
+        task = etree.SubElement(recipe, 'task')
+        task.set('name', '/fedora/freespace/prepare')
+        task.set('role', 'STANDALONE')
+    if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_free_space":
+        task = etree.SubElement(recipe, 'task')
+        task.set('name', '/fedora/freespace/task')
+        task.set('role', 'STANDALONE')
     if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_multi_empty_all":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/multi/empty')
