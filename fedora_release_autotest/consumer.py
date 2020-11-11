@@ -76,14 +76,23 @@ def populate_data(data):
     ks_list = conf_test_cases.Ks_List
     hw_testcases = conf_test_cases.Hw_TestCase
     data_list = []
+    arch = data["cpu-arch"]
     base_http_url = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
     base_nfs_url = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
     base_released_url = "http://download.eng.bos.redhat.com/released/fedora"
-    base_branched_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
+    base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
     release_str = re.split('-', data["beaker-distro"])[1]
     compose_name = re.split('-', data["beaker-distro"])[2]
     if release_str == 'Rawhide':
         release_number = int(data["recent_release"]) + 1
+        base_url = "https://kojipkgs.fedoraproject.org/compose/rawhide/"
+        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", temp["cpu-arch"],
+                "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
+    else:
+        release_number = release_str
+        base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
+        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", temp["cpu-arch"],
+                "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
     for driver in driver_list:
         temp = copy.deepcopy(data)
         temp["device_drivers"] = driver
@@ -92,7 +101,6 @@ def populate_data(data):
     for ks_data in ks_list:
         (ts_name , params), = ks_data.items()
         temp = copy.deepcopy(data)
-        arch = temp["cpu-arch"]
         temp["ts_name"] = ts_name
         for key, value in params.items():
             temp[key] = value
@@ -100,17 +108,12 @@ def populate_data(data):
             previous = int(release_number) - 1 
             temp['beaker-distro'] = 'Fedora-' + str(previous)
             temp['beaker-family'] = 'Fedora' + str(previous)
-            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"], 
-                        "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_str, compose_name)
-
             temp['ks_append'] = """
                                  %%post
                                  wget %s -P /var/lib/libvirt/images/
                                  %%end
                                  """%download_url
         if ts_name == "QA:Testcase_Install_to_Current_KVM":
-            download_url = os.path.join(base_branched_url, temp["beaker-distro"], "compose/Server", temp["cpu-arch"],
-                        "iso", "Fedora-Server-dvd-%s-%s-%s")%(arch, release_str, compose_name)
             temp['ks_append'] = """
                                  %%post
                                  wget %s -P /var/lib/libvirt/images/
