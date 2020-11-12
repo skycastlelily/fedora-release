@@ -336,7 +336,9 @@ async def provision_loop(sanitized_query):
 
             if recipes is None and failure_count != 6:
                 logger.error("Provision failed, retrying")
-                await cancel_beaker_job(func_id)
+                # cancel the corresponding task job if the prepare job failed
+                if func_id:
+                    await cancel_beaker_job(func_id)
 
             else:
                 break

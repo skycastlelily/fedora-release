@@ -86,12 +86,12 @@ def populate_data(data):
     if release_str == 'Rawhide':
         release_number = int(data["recent_release"]) + 1
         base_url = "https://kojipkgs.fedoraproject.org/compose/rawhide/"
-        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", temp["cpu-arch"],
+        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", data["cpu-arch"],
                 "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
     else:
         release_number = release_str
         base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
-        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", temp["cpu-arch"],
+        download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", data["cpu-arch"],
                 "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
     for driver in driver_list:
         temp = copy.deepcopy(data)
