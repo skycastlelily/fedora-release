@@ -358,6 +358,10 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     task_param.set('name', 'RSTRNT_DISABLED')
     task_param.set('value', '01_dmesg_check 10_avc_check')
 
+    if sanitized_query.get("device_description") == "UEFI":
+        task = etree.SubElement(recipe, 'task')
+        task.set('name', '/fedora/check/uefi')
+        task.set('role', 'STANDALONE')
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/virt/kvm-install')

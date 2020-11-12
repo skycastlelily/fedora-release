@@ -27,6 +27,7 @@ Ks_List = [
     { "QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Server",
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         }},
     {"QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Server",
@@ -34,6 +35,7 @@ Ks_List = [
         }},
     {"QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Everything",
+        "packages": ["beakerlib", ],
         "device_description": "UEFI",
         }},
     { "QA:Testcase_Boot_default_install": {
@@ -94,6 +96,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_guided_delete_all": {
         "ks_meta": "no_autopart",
+        "packages": ["beakerlib", ],
         "ks_append": "autopart --type lvm",
         "device_description": "UEFI",
         }},
@@ -209,6 +212,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_btrfs": {
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype="xfs"  --size=1024
@@ -239,6 +243,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype=ext4  --size=1024
@@ -263,6 +268,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_lvm_ext4": {
+        "packages": ["beakerlib", ],
         "device_description": "UEFI",
         "ks_meta": "no_autopart",
         "ks_append": """
@@ -283,6 +289,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_lvmthin": {
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type thinp",
         }},
@@ -301,6 +308,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype=xfs --size=1024
@@ -327,6 +335,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
         "device_description": "UEFI",
+        "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype=xfs --size=1024
