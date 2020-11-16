@@ -93,7 +93,7 @@ def is_recipes_failed(recipes):
 
 
 def is_recipes_finished(recipes):
-    if all(info['status'] == 'Running' for info in recipes):
+    if all(info['status'] == 'Completed' for info in recipes):
         logger.info("Beaker job finished")
         return True
 

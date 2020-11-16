@@ -604,12 +604,37 @@ TESTCASES = {
         "env": "x86_64",
         "type": "Installation",
     },
+    "QA:Testcase_Install_to_Previous_KVM": {
+        "section": "Virtualization",
+        "env": "$BOOTMETHOD$",
+        "type": "Installation",
+    },
+    "QA:Testcase_Install_to_Current_KVM": {
+        "section": "Virtualization",
+        "env": "$BOOTMETHOD$",
+        "type": "Installation",
+    },
+    "QA:Testcase_install_to_NVMe": {
+        "section": "Storage devices",
+        "env": "$RUNARCH$",
+        "type": "Installation",
+    },
     "QA:Testcase_install_to_PATA": {
         "section": "Storage devices",
         "env": "x86_64",
         "type": "Installation",
     },
     "QA:Testcase_install_to_SATA": {
+        "section": "Storage devices",
+        "env": "$RUNARCH$",
+        "type": "Installation",
+    },
+    "QA:Testcase_install_to_SCSI": {
+        "section": "Storage devices",
+        "env": "$RUNARCH$",
+        "type": "Installation",
+    },
+    "QA:Testcase_install_to_SAS": {
         "section": "Storage devices",
         "env": "x86_64",
         "type": "Installation",
