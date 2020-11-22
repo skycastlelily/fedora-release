@@ -374,6 +374,10 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/upgrade/dnf')
         task.set('role', 'STANDALONE')
+        task_params = etree.SubElement(task, 'params')
+        task_param = etree.SubElement(task_params, 'param')
+        task_param.set('name', 'RSTRNT_DISABLED')
+        task_param.set('value', '01_dmesg_check 10_avc_check')
     if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/multi/prepare')
