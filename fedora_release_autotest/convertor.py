@@ -399,9 +399,9 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task.set('name', '/fedora/multi/empty')
         task.set('role', 'STANDALONE')
     
-    reserve = etree.SubElement(recipe, 'reservesys')
-    reserve.set('duration', '86400')
-    reserve.set('when', 'onfail')
+    #reserve = etree.SubElement(recipe, 'reservesys')
+    #reserve.set('duration', '86400')
+    #reserve.set('when', 'onfail')
 
 
 
