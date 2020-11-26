@@ -139,6 +139,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_guided_free_space_pre": {
         "ks_meta": "no_autopart",
+        "disk-total_size": {"$gt": "50G"},
         "device_description": "BIOS",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
@@ -148,6 +149,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_guided_free_space_pre": {
         "ks_meta": "no_autopart",
+        "disk-total_size": {"$gt": "50G"},
         "device_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
@@ -158,6 +160,7 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_free_space_pre": {
         "ks_meta": "no_autopart",
         "cpu-arch": "aarch64",
+        "disk-total_size": {"$gt": "50G"},
         "packages": ["wget", "beakerlib"],
         "ks_append": """
                      part /boot --fstype="xfs" --size=1024 --ondisk=sda
@@ -468,6 +471,7 @@ Ks_List_Two = [
      "beaker-distro": "",
      "system-type": "baremetal",
      "do_report": "True",
+     "ks_kickstart": "REPLACE_THIS",
      "wiki_hostname": "fedoraproject.org",
      "resultsdb_url": "http://resultsdb01.qa.fedoraproject.org/resultsdb_api/api/v2.0/",
     },

@@ -20,7 +20,7 @@ BEAKER_URL = Settings.BEAKER_URL.rstrip('/')
 async def bkr_command(*args, input=None):
     p = await asyncio.create_subprocess_exec(
         *(['bkr'] + list(args)),
-        stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+        stdin=PIPE, stdout=PIPE, stderr=None)
     stdout, stderr = await p.communicate(input=bytes(input, 'utf8') if input else None)
     if stderr:
         logger.error("Failed calling bkr with error:", stderr)
@@ -85,7 +85,7 @@ def is_recipes_failed(recipes):
     elif any(info['result'] in ['Warn', 'Fail', 'Panic'] for info in recipes):
         logger.error("Beaker job ended with Warn, Fail or Panic")
         return True
-    elif any(info['status'] in ['Aborted'] for info in recipes):
+    elif any(info['status'] in ['Aborted', 'Reserved'] for info in recipes):
         logger.error("Beaker job Aborted")
         return True
     else:
@@ -304,6 +304,11 @@ async def submit_function(data, recipe):
     job_str["cpu-arch"] = data["cpu-arch"]
     job_str["beaker-distro"] = data["beaker-distro"]
     job_str["device_description"] = data.get("device_description")
+    if job_str.get("ks_kickstart") == "REPLACE_THIS":
+        subprocess.run("wget https://lnie.fedorapeople.org/bos-rawhide.ks -P /tmp/" , shell=True)
+        subprocess.run("sed -i 's/REPLACE_THIS/%s/g' /tmp/bos-rawhide.ks" % data["beaker-distro"], shell=True)
+        job_str["ks_kickstart"] = subprocess.getoutput("cat /tmp/bos-rawhide.ks")
+        job_str["ks_meta"] = "no_ks_template"
     job_xml = query_to_xml(job_str)
     job_id = await submit_beaker_job(job_xml)
     return job_id
@@ -346,17 +351,8 @@ async def provision_loop(sanitized_query):
         if func_id:
             # prepare job succeed
             if recipes:
-                recipes = await pull_beaker_job(func_id)
-                # task job failed,retry
-                if recipes is None:
-                    for failure_count in range(2):
-                        job_id =  await submit_function(sanitized_query, recipe)
-                        recipes = await pull_beaker_job(job_id)
-                        if recipes is None and failure_count != 2:
-                            logger.error("Provision failed, retrying")
-                # task job succeed
-                else:
-                    job_id = func_id
+                job_id = func_id
+                recipes = await pull_beaker_job(job_id)
             else:
                 bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
                 logger.error("Job failed,check %s for more information"%bkr_job_url)
@@ -374,7 +370,7 @@ async def process(data):
         data["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
     if data["ts_name"] == "QA:Testcase_partitioning_guided_free_space_pre":
         data["ts_name"] = "QA:Testcase_partitioning_guided_free_space"
-    if is_recipes_failed([recipe,]):
+    if is_recipes_failed([recipe, ]):
         bkr_job_url = "{}/jobs/{}".format(BEAKER_URL, job_id[2:])
         logger.error("Testcase %s failed!"%data["ts_name"])
         logger.error("Job failed,check %s for more information"%bkr_job_url)

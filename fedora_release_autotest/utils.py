@@ -48,7 +48,7 @@ def wiki_report(data, result):
             testtype=testtype, testcase=testcase, testname=testname, section=section,
             env=env, status=result, bot=True, cid=data["beaker-distro"])
         testcases.append(testcase)
-        logger.info("reporting test passes to %s", wiki_hostname)
+        logger.info("reporting test %s passes to %s", testcase, wiki_hostname)
 
     #todo put this to config file
         wiki = Wiki(wiki_hostname, max_retries=40)

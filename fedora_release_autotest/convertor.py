@@ -150,6 +150,8 @@ def fill_machine_type(host_requires: Element, sanitized_query: dict):
     system_type = etree.SubElement(host_requires, 'system_type')
     system_type.set("value", "Machine")
 
+def fill_kickstart(root: Element, sanitized_query: dict):
+    root.text = etree.CDATA(sanitized_query.get('ks_kickstart'))
 
 def fill_ks_appends(root: Element, sanitized_query: dict):
     """
@@ -432,11 +434,14 @@ def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
     host_requires = etree.SubElement(recipe, 'hostRequires')
 
     ks_appends = etree.SubElement(recipe, 'ks_appends')
+    ks_kickstart = etree.SubElement(recipe, 'kickstart')
     repos = etree.SubElement(recipe, 'repos')
     distro_requires = etree.SubElement(recipe, 'distroRequires')
     packages = etree.SubElement(recipe, 'packages')
-
-    fill_ks_appends(ks_appends, sanitized_query)
+    if sanitized_query.get('ks_kickstart'):
+        fill_kickstart(ks_kickstart, sanitized_query)
+    else:
+        fill_ks_appends(ks_appends, sanitized_query)
     fill_packages(packages, sanitized_query)
     fill_repos(repos, sanitized_query)
     fill_distro_requires(distro_requires, sanitized_query)
