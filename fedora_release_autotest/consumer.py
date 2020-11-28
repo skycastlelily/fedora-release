@@ -207,7 +207,7 @@ class Consumer:
             if data:
 
                 #We have to give beaker some time to sync the repo
-                time.sleep(4800)
+                time.sleep(10800)
                 asyncio.run(process_data(data))
         except Exception as e:
             logger.error("consumer failed: %s"%e)
