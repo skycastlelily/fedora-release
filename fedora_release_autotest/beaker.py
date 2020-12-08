@@ -3,7 +3,7 @@ import asyncio
 import logging
 import datetime
 import copy
-
+import subprocess
 from asyncio.subprocess import PIPE, STDOUT
 from .settings import Settings
 from .utils import wiki_report
