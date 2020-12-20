@@ -50,7 +50,7 @@ async def fetch_job_recipes(job_id: str):
             active_job_xml_str = await bkr_command('job-results', job_id)
             active_job_xml = etree.fromstring(active_job_xml_str)
             recipes = list(map(lambda x: dict(x.attrib), active_job_xml.xpath('//recipe')))
-            if not recipes:
+            if not recipes[0]:
                 raise RuntimeError('bkr job-results command failure, may caused by: beaker is down, network'
                                    'issue or some interface changes, can\''
                                    't find valid recipe, xml result is {}'.format(active_job_xml_str))
@@ -79,7 +79,7 @@ async def extend_task_watchdog(job_id: str):
 
 
 def is_recipes_failed(recipes):
-    if not recipes:
+    if not recipes[0]:
         logger.error("Invalid recipes")
         return True
     elif any(info['result'] in ['Warn', 'Fail', 'Panic'] for info in recipes):
