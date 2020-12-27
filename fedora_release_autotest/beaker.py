@@ -20,7 +20,7 @@ BEAKER_URL = Settings.BEAKER_URL.rstrip('/')
 async def bkr_command(*args, input=None):
     p = await asyncio.create_subprocess_exec(
         *(['bkr'] + list(args)),
-        stdin=PIPE, stdout=PIPE, stderr=None)
+        stdin=PIPE, stdout=PIPE, stderr=STDOUT)
     stdout, stderr = await p.communicate(input=bytes(input, 'utf8') if input else None)
     if stderr:
         logger.error("Failed calling bkr with error:", stderr)

@@ -150,6 +150,17 @@ def fill_machine_type(host_requires: Element, sanitized_query: dict):
     system_type = etree.SubElement(host_requires, 'system_type')
     system_type.set("value", "Machine")
 
+def fill_system(host_requires: Element, sanitized_query: dict):
+    # Always baremetal
+    system_element = etree.SubElement(host_requires, 'system')
+    hypervisor_require = etree.SubElement(system_element, 'hypervisor')
+    hypervisor_require.set("op", "=")
+    hypervisor_require.set("value", "")
+    if sanitized_query.get('cpu-arch') == 'aarch64':
+        vendor_require = etree.SubElement(system_element, 'vendor')
+        vendor_require.set("op", "!=")
+        vendor_require.set("value", "HP")
+
 def fill_kickstart(root: Element, sanitized_query: dict):
     root.text = etree.CDATA(sanitized_query.get('ks_kickstart'))
 
@@ -307,16 +318,12 @@ def fill_host_requirements(host_requires: Element, sanitized_query: dict):
         require.set("op", op)
         require.set("value", str(value))
 
-    if sanitized_query.get('system-type', 'baremetal') == 'baremetal':
-        add_requirement('hypervisor', '=', '')
-    else:
-        raise ValidateError('System type other that baremetal is not supported yet.')
-
     if sanitized_query.get('device_description'):
         add_requirement('device_description', '=', sanitized_query.get('device_description'))
 
     if sanitized_query.get('cpu-arch'):
         add_requirement('arch', '=', sanitized_query.get('cpu-arch'))
+
 
     for op, value in sanitized_query.get('memory-total_size', {}).items():
         add_requirement('memory', op_map[op], value)
@@ -343,10 +350,10 @@ def fill_host_requirements(host_requires: Element, sanitized_query: dict):
         for host in host_list:
             add_requirement('hostname', '!=', host)
 
+    fill_system(host_requires, sanitized_query)
     fill_cpu(host_requires, sanitized_query)
     fill_devices(host_requires, sanitized_query)
     fill_machine_type(host_requires, sanitized_query)
-
 
 def add_reserve_task(recipe: Element, sanitized_query: dict):
     """
