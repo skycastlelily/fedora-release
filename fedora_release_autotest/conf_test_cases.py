@@ -153,6 +153,7 @@ Ks_List = [
         "device_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
+                     part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
                      part /boot --fstype="xfs" --size=1024 --ondisk=sda
                      part / --fstype="xfs" --size=10240 --ondisk=sda
                      """
@@ -163,6 +164,7 @@ Ks_List = [
         "disk-total_size": {"$gt": "50G"},
         "packages": ["wget", "beakerlib"],
         "ks_append": """
+                     part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
                      part /boot --fstype="xfs" --size=1024 --ondisk=sda
                      part / --fstype="xfs" --size=10240 --ondisk=sda
                      """
