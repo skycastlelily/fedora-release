@@ -318,13 +318,12 @@ def fill_host_requirements(host_requires: Element, sanitized_query: dict):
         require.set("op", op)
         require.set("value", str(value))
 
-    if sanitized_query.get('device_description'):
-        add_requirement('device_description', '=', sanitized_query.get('device_description'))
+    if sanitized_query.get('device_description') == 'UEFI':
+        add_requirement('NETBOOT_METHOD', '=', 'efigrub', is_extra=True)
 
     if sanitized_query.get('cpu-arch'):
         add_requirement('arch', '=', sanitized_query.get('cpu-arch'))
-
-
+        
     for op, value in sanitized_query.get('memory-total_size', {}).items():
         add_requirement('memory', op_map[op], value)
 
@@ -367,14 +366,6 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
     task_param.set('name', 'RSTRNT_DISABLED')
     task_param.set('value', '01_dmesg_check 10_avc_check')
 
-    if sanitized_query.get("device_description") == "UEFI":
-        task = etree.SubElement(recipe, 'task')
-        task.set('name', '/fedora/check/uefi')
-        task.set('role', 'STANDALONE')
-        task_params = etree.SubElement(task, 'params')
-        task_param = etree.SubElement(task_params, 'param')
-        task_param.set('name', 'RSTRNT_DISABLED')
-        task_param.set('value', '01_dmesg_check 10_avc_check')
     if sanitized_query["ts_name"] == "QA:Testcase_Install_to_Previous_KVM":
         task = etree.SubElement(recipe, 'task')
         task.set('name', '/fedora/virt/kvm-install')
