@@ -143,6 +143,9 @@ def populate_data(data):
             previous = int(release_number) - 2
             temp['beaker-distro'] = 'Fedora-' + str(previous)
             temp['ks_append'] = """
+                                 %%packages
+                                 @^workstation-product-environment
+                                 %%end
                                  %%post
                                  dnf install restraint-rhts -y
                                  echo %s > /root/release
@@ -153,6 +156,9 @@ def populate_data(data):
             current = int(release_number) - 1
             temp['beaker-distro'] = 'Fedora-' + str(current)
             temp['ks_append'] = """
+                                 %%packages
+                                 @^workstation-product-environment
+                                 %%end
                                  %%post
                                  systemctl enable sshd
                                  dnf install restraint-rhts -y
@@ -163,6 +169,9 @@ def populate_data(data):
             previous = int(release_number) - 2
             temp['beaker-distro'] = 'Fedora-' + str(previous)
             temp['ks_append'] = """
+                                 %%packages
+                                 @^minimal-environment
+                                 %%end
                                  %%post
                                  systemctl enable sshd
                                  dnf install restraint-rhts -y
@@ -173,6 +182,9 @@ def populate_data(data):
             current = int(release_number) - 1
             temp['beaker-distro'] = 'Fedora-' + str(current)
             temp['ks_append'] = """
+                                 %%packages
+                                 @^minimal-environment
+                                 %%end
                                  %%post
                                  systemctl enable sshd
                                  dnf install restraint-rhts -y
