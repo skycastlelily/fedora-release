@@ -107,6 +107,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_Install_to_Previous_KVM":
             previous = int(release_number) - 1 
             temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['real-distro'] = data['beaker-distro']
             temp['beaker-family'] = 'Fedora' + str(previous)
             temp['ks_append'] = """
                                  %%post
@@ -122,6 +123,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_previous_server":
             previous = int(release_number) - 2
             temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['real-distro'] = data['beaker-distro']
             temp['beaker-family'] = 'Fedora' + str(previous)
             temp['ks_append'] = """
                                  %%post
@@ -132,6 +134,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_current_server":
             current = int(release_number) - 1
             temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['real-distro'] = data['beaker-distro']
             temp['beaker-family'] = 'Fedora' + str(current)
             temp['ks_append'] = """
                                  %%post
@@ -142,6 +145,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_previous_workstation":
             previous = int(release_number) - 2
             temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['real-distro'] = data['beaker-distro']
             temp['ks_append'] = """
                                  %%packages
                                  @^workstation-product-environment
@@ -155,6 +159,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_current_workstation":
             current = int(release_number) - 1
             temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['real-distro'] = data['beaker-distro']
             temp['ks_append'] = """
                                  %%packages
                                  @^workstation-product-environment
@@ -168,6 +173,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_previous_minimal":
             previous = int(release_number) - 2
             temp['beaker-distro'] = 'Fedora-' + str(previous)
+            temp['real-distro'] = data['beaker-distro']
             temp['ks_append'] = """
                                  %%packages
                                  @^minimal-environment
@@ -181,6 +187,7 @@ def populate_data(data):
         if ts_name == "QA:Testcase_upgrade_dnf_current_minimal":
             current = int(release_number) - 1
             temp['beaker-distro'] = 'Fedora-' + str(current)
+            temp['real-distro'] = data['beaker-distro']
             temp['ks_append'] = """
                                  %%packages
                                  @^minimal-environment

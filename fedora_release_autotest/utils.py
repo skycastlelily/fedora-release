@@ -44,9 +44,13 @@ def wiki_report(data, result):
                 break
                 # we only pass one testcase each time,so we break here to save time
         testcases = []
+        if 'upgrade' in data["ts_name"] or data["ts_name"] == 'QA:Testcase_Install_to_Previous_KVM':
+            cid = data["real-distro"]
+        else:
+            cid = data["beaker-distro"]
         testcase = ResTuple(
             testtype=testtype, testcase=testcase, testname=testname, section=section,
-            env=env, status=result, bot=True, cid=data["beaker-distro"])
+            env=env, status=result, bot=True, cid=cid)
         testcases.append(testcase)
         logger.info("reporting test %s passes to %s", testcase, wiki_hostname)
 

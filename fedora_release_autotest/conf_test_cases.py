@@ -357,15 +357,6 @@ Ks_List = [
                      part / --fstype=xfs --grow
                      """
         }},
-    {"QA:Testcase_install_repository_HTTP/FTP_variation": {
-        "kernel_options": "",
-        }},
-    {"QA:Testcase_install_repository_NFS_variation": {
-        "kernel_options": "",
-        }},
-    {"QA:Testcase_install_repository_NFSISO_variation": {
-        "kernel_options": "",
-        }},
     {"QA:Testcase_Package_Sets_Minimal_Package_Install": {
         "beaker-distro_variant": "Everything",
         "ks_append": """
