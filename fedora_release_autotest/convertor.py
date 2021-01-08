@@ -323,6 +323,8 @@ def fill_host_requirements(host_requires: Element, sanitized_query: dict):
 
     if sanitized_query.get('device_description') == 'UEFI':
         add_requirement('NETBOOT_METHOD', '=', 'efigrub', is_extra=True)
+    else:
+        add_requirement('NETBOOT_METHOD', '!=', 'efigrub', is_extra=True)
 
     if sanitized_query.get('cpu-arch'):
         add_requirement('arch', '=', sanitized_query.get('cpu-arch'))
