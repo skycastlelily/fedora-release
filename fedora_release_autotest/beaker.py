@@ -321,6 +321,10 @@ async def provision_loop(sanitized_query):
         func_id = None
         for failure_count in range(6):
             job_id = await submit_beaker_job(job_xml)
+            # we only can automatically check wether encrypt installation successfully ATM 
+            if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_encrypted":
+                recipes = await pull_beaker_job(job_id)
+                break
             if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_multi_select_pre":
                 sanitized_query["ts_name"] = "QA:Testcase_partitioning_guided_multi_select"
                 while True:
