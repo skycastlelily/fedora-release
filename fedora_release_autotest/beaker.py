@@ -319,7 +319,7 @@ async def provision_loop(sanitized_query):
         recipes = None
         recipe = None
         func_id = None
-        for failure_count in range(6):
+        for failure_count in range(3):
             job_id = await submit_beaker_job(job_xml)
             # we only can automatically check wether encrypt installation successfully ATM 
             if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_encrypted":
@@ -343,7 +343,7 @@ async def provision_loop(sanitized_query):
                 func_id = await submit_function(sanitized_query, recipe)
             recipes = await pull_beaker_job(job_id)
 
-            if recipes is None and failure_count != 6:
+            if recipes is None and failure_count != 3:
                 logger.error("Provision failed, retrying")
                 # cancel the corresponding task job if the prepare job failed
                 if func_id:

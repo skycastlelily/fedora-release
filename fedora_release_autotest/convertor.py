@@ -160,9 +160,6 @@ def fill_system(host_requires: Element, sanitized_query: dict):
         vendor_require = etree.SubElement(system_element, 'vendor')
         vendor_require.set("op", "!=")
         vendor_require.set("value", "HP")
-        vendor_require = etree.SubElement(system_element, 'name')
-        vendor_require.set("op", "!=")
-        vendor_require.set("value", "apm-mustang%")
 
 def fill_kickstart(root: Element, sanitized_query: dict):
     root.text = etree.CDATA(sanitized_query.get('ks_kickstart'))
