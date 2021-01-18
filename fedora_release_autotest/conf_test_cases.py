@@ -303,33 +303,6 @@ Ks_List = [
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type thinp",
         }},
-    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
-        "device_description": "BIOS",
-        "ks_meta": "no_autopart",
-        "ks_append": """
-                     part /boot --fstype=xfs
-                     part / --fstype=ext3 --grow
-                     """
-        }},
-    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
-        "device_description": "UEFI",
-        "packages": ["beakerlib", ],
-        "ks_meta": "no_autopart",
-        "ks_append": """
-                     part /boot --fstype=xfs --size=1024
-                     part /boot/efi --fstype="xfs"  --size=1024
-                     part / --fstype=ext3 --grow
-                     """
-        }},
-    {"QA:Testcase_partitioning_custom_standard_partition_ext3": {
-        "cpu-arch": "aarch64",
-        "ks_meta": "no_autopart",
-        "ks_append": """
-                     part /boot --fstype=xfs --size=1024
-                     part /boot/efi --fstype="xfs"  --size=1024
-                     part / --fstype=ext3 --grow
-                     """
-        }},
     {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
         "device_description": "BIOS",
         "ks_meta": "no_autopart",
@@ -356,6 +329,12 @@ Ks_List = [
                      part /boot/efi --fstype="xfs"  --size=1024
                      part / --fstype=xfs --grow
                      """
+        }},
+    {"QA:Testcase_install_repository_HTTP/FTP_variation": {
+        "kernel_options": "",
+        }},
+    {"QA:Testcase_install_repository_NFS_variation": {
+        "kernel_options": "",
         }},
     {"QA:Testcase_Package_Sets_Minimal_Package_Install": {
         "beaker-distro_variant": "Everything",

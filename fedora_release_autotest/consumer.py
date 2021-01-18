@@ -77,8 +77,8 @@ def populate_data(data):
     hw_testcases = conf_test_cases.Hw_TestCase
     data_list = []
     arch = data["cpu-arch"]
-    base_http_url = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
-    base_nfs_url = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
+    base_http_url_rawhide = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
+    base_nfs_url_rawhide = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
     base_released_url = "http://download.eng.bos.redhat.com/released/fedora"
     base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
     release_str = re.split('-', data["beaker-distro"])[1]
@@ -88,6 +88,8 @@ def populate_data(data):
         base_url = "https://kojipkgs.fedoraproject.org/compose/rawhide/"
         download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", data["cpu-arch"],
                 "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
+        http_url = os.path.join(base_http_url_rawhide, data["beaker-distro"], "Server", data["cpu-arch"], "os")
+        nfs_url = os.path.join(base_nfs_url_rawhide, data["beaker-distro"], "Server", data["cpu-arch"], "os")
     else:
         release_number = release_str
         base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
@@ -198,7 +200,10 @@ def populate_data(data):
                                  echo %s > /root/release
                                  %%end
                                  """%release_number
-
+        if ts_name == "QA:Testcase_install_repository_HTTP/FTP_variation":
+            temp["kernel_options"] = "inst.repo=%s"%http_url
+        if ts_name == "QA:Testcase_install_repository_NFS_variation":
+            temp["kernel_options"] = "inst.repo=%s"%nfs_url
         data_list.append(temp)
     return data_list
 
