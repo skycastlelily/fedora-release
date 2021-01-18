@@ -344,6 +344,17 @@ Ks_List = [
                      %end
                      """
         }},
+    {"QA:Testcase_kickstart_user_creation": {
+        "packages": ["beaker-client", "beakerlib", "restraint-rhts"],
+        }},
+    {"QA:Testcase_Kickstart_Http_Server_Ks_Cfg": {
+        "packages": ["beaker-client", "beakerlib", "restraint-rhts"],
+        "ks_meta": "no_autopart",
+        "ks_append": """
+                     part /boot --fstype="xfs" --size=1024 --ondisk=sda
+                     part / --fstype="xfs" --grow --ondisk=sda
+                     """
+        }},
     {"QA:Testcase_upgrade_dnf_current_workstation": {
         "cpu-arch": "x86_64",
         "beaker-distro_variant": "Everything",
