@@ -51,6 +51,12 @@ Ks_List = [
     {"QA:Testcase_install_to_NVMe": {
         "cpu-arch": "aarch64",
         }},
+    {"QA:Testcase_install_to_SATA": {
+        "cpu-arch": "aarch64",
+        }},
+    {"QA:Testcase_install_to_SAS": {
+        "cpu-arch": "aarch64",
+        }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
@@ -578,12 +584,12 @@ TESTCASES = {
     },
     "QA:Testcase_install_to_SCSI": {
         "section": "Storage devices",
-        "env": "$RUNARCH$",
+        "env": "x86_64",
         "type": "Installation",
     },
     "QA:Testcase_install_to_SAS": {
         "section": "Storage devices",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_partitioning_guided_delete_all": {
