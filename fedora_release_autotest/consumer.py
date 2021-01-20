@@ -200,7 +200,7 @@ def populate_data(data):
                                  echo %s > /root/release
                                  %%end
                                  """%release_number
-        if ts_name == "QA:Testcase_install_repository_HTTP/FTP_variation":
+        if ts_name == "QA:Testcase_install_repository_HTTP_variation":
             temp["kernel_options"] = "inst.repo=%s"%http_url
         if ts_name == "QA:Testcase_install_repository_NFS_variation":
             temp["kernel_options"] = "inst.repo=%s"%nfs_url

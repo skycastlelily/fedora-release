@@ -336,7 +336,7 @@ Ks_List = [
                      part / --fstype=xfs --grow
                      """
         }},
-    {"QA:Testcase_install_repository_HTTP/FTP_variation": {
+    {"QA:Testcase_install_repository_HTTP_variation": {
         "kernel_options": "",
         }},
     {"QA:Testcase_install_repository_NFS_variation": {
@@ -627,12 +627,12 @@ TESTCASES = {
         "env": "Result",
         "type": "Installation",
     },
-    "QA:Testcase_install_repository_HTTP/FTP_graphical": {
+    "QA:Testcase_install_repository_HTTP_graphical": {
         "section": "Installation repositories",
         "env": "Result",
         "type": "Installation",
     },
-    "QA:Testcase_install_repository_HTTP/FTP_variation": {
+    "QA:Testcase_install_repository_HTTP_variation": {
         "section": "Installation repositories",
         "env": "Result",
         "type": "Installation",
