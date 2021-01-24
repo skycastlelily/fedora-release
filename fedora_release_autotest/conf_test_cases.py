@@ -114,6 +114,17 @@ Ks_List = [
     {"QA:Testcase_install_to_hardware_RAID": {
         "cpu-arch": "aarch64",
         }},
+    { "QA:Testcase_install_to_VirtIO": {
+        "cpu-arch": "x86_64",
+        "cpu-flags": ["vmx", ],
+        "packages": ["wget", "beakerlib"],
+        "disk-total_size": {"$gt": "50G"}
+        }},
+    { "QA:Testcase_install_to_VirtIO": {
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib"],
+        "disk-total_size": {"$gt": "50G"}
+        }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
@@ -576,7 +587,7 @@ TESTCASES = {
     },
     "QA:Testcase_install_to_VirtIO": {
         "section": "Storage devices",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_partitioning_guided_empty": {
