@@ -15,7 +15,10 @@ def wiki_report(data, result):
     section = ''
     env = ''
     arch = data.get('cpu-arch') or 'x86_64'
-    subvariant = data.get('beaker-distro_variant') or 'Server'
+    if data["ts_name"] == "QA:Testcase_arm_image_deployment":
+        subvariant = data.get('real-distro_variant') or 'Server'
+    else:
+        subvariant = data.get('beaker-distro_variant') or 'Server'
     if data.get('device_description') == 'BIOS':
         bootmethod = 'x86_64 BIOS'
         firmware = 'BIOS'
@@ -25,6 +28,7 @@ def wiki_report(data, result):
     if data.get('cpu-arch') == 'aarch64':
         bootmethod = 'aarch64'
         firmware = 'aarch64'
+    vm_hw = data.get('vm_hw') or 'HW'
     if do_report:
         for key, value in conf_test_cases.TESTCASES.items():
             if key == data["ts_name"]:
@@ -35,6 +39,7 @@ def wiki_report(data, result):
                     v = v.replace('$BOOTMETHOD$', bootmethod)
                     v = v.replace('$SUBVARIANT$', subvariant)
                     v = v.replace('$IMAGETYPE$', imagetype)
+                    v = v.replace('$VM_HW$', vm_hw)
                     changed[k] = v
                 testcase = key
                 testtype = changed["type"]

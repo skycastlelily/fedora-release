@@ -42,6 +42,60 @@ Ks_List = [
         "beaker-distro_variant": "Everything",
         "device_description": "BIOS",
         }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Server",
+        "cpu-arch": "aarch64",
+        "vm_hw": "HW",
+        }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Everything",
+        "real-distro_variant": "Minimal",
+        "cpu-arch": "aarch64",
+        "vm_hw": "HW",
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Everything",
+        "real-distro_variant": "Workstation",
+        "cpu-arch": "aarch64",
+        "vm_hw": "HW",
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Server",
+        "cpu-arch": "aarch64",
+        "vm_hw": "VM",
+        }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Everything",
+        "real-distro_variant": "Minimal",
+        "cpu-arch": "aarch64",
+        "vm_hw": "VM",
+        "ks_append": """
+                     %packages
+                     @^minimal-environment
+                     %end
+                     """
+        }},
+    { "QA:Testcase_arm_image_deployment": {
+        "beaker-distro_variant": "Everything",
+        "real-distro_variant": "Workstation",
+        "cpu-arch": "aarch64",
+        "vm_hw": "VM",
+        "ks_append": """
+                     %packages
+                     @^workstation-product-environment
+                     %end
+                     """
+        }},
     {"QA:Testcase_Boot_Methods_Pxeboot": {
         "cpu-arch": "x86_64",
         }},
@@ -514,7 +568,7 @@ TESTCASES = {
     "QA:Testcase_arm_image_deployment": {
         "name": "$SUBVARIANT$",
         "section": "ARM disk images",
-        "env": "Ext boot",
+        "env": "$RUNARCH$ $VM_HW$",
         "type": "Installation"
     },
     "QA:Testcase_install_to_VirtIO": {
@@ -769,22 +823,22 @@ TESTCASES = {
     },
     "QA:Testcase_upgrade_dnf_current_minimal": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_current_workstation": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_current_workstation_encrypted": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_current_server": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_current_kde": {
@@ -799,22 +853,22 @@ TESTCASES = {
     },
     "QA:Testcase_upgrade_dnf_previous_minimal": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_previous_workstation": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_previous_workstation_encrypted": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_previous_server": {
         "section": "Upgrade",
-        "env": "x86_64",
+        "env": "$RUNARCH$",
         "type": "Installation",
     },
     "QA:Testcase_upgrade_dnf_previous_kde": {
