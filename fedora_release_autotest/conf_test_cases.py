@@ -111,6 +111,9 @@ Ks_List = [
     {"QA:Testcase_install_to_SAS": {
         "cpu-arch": "aarch64",
         }},
+    {"QA:Testcase_install_to_hardware_RAID": {
+        "cpu-arch": "aarch64",
+        }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
@@ -530,7 +533,7 @@ Hw_TestCase = {
     "sata": "QA:Testcase_install_to_SATA",
     "scsi": "QA:Testcase_install_to_SCSI",
     "sas": "QA:Testcase_install_to_SAS",
-    "raid": "QA:Testcase_install_to_RAID",
+    "raid": "QA:Testcase_install_to_hardware_RAID",
 }
 
 TESTCASES = {
@@ -642,6 +645,11 @@ TESTCASES = {
         "type": "Installation",
     },
     "QA:Testcase_install_to_SAS": {
+        "section": "Storage devices",
+        "env": "$RUNARCH$",
+        "type": "Installation",
+    },
+    "QA:Testcase_install_to_hardware_RAID": {
         "section": "Storage devices",
         "env": "$RUNARCH$",
         "type": "Installation",
