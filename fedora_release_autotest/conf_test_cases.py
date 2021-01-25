@@ -404,6 +404,44 @@ Ks_List = [
                      part / --fstype=xfs --grow
                      """
         }},
+    {"QA:Testcase_partitioning_custom_with_swap": {
+        "device_description": "BIOS",
+        "ks_meta": "no_autopart",
+        "packages": ["beakerlib", "restraint-rhts"],
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part swap --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_with_swap": {
+        "device_description": "UEFI",
+        "ks_meta": "no_autopart",
+        "packages": ["beakerlib", "restraint-rhts"],
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
+                     part swap --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
+    {"QA:Testcase_partitioning_custom_with_swap": {
+        "cpu-arch": "aarch64",
+        "ks_meta": "no_autopart",
+        "packages": ["beakerlib", "restraint-rhts"],
+        "ks_append": """
+                     part /boot --fstype="xfs"  --size=1024
+                     part /boot/efi --fstype="xfs"  --size=1024
+                     part swap --size=1024
+                     part btrfs.355 --fstype="btrfs"  --size=15360
+                     btrfs none --label=fedora_fedora00 btrfs.355
+                     btrfs / --subvol --name=root LABEL=fedora_fedora00
+                     """
+        }},
     {"QA:Testcase_install_repository_HTTP_variation": {
         "kernel_options": "",
         }},
@@ -790,7 +828,7 @@ TESTCASES = {
         "env": "$BOOTMETHOD$",
         "type": "Installation",
     },
-    "QA:Testcase_partitioning_custom_no_swap": {
+    "QA:Testcase_partitioning_custom_with_swap": {
         "section": "Custom storage configuration",
         "env": "$BOOTMETHOD$",
         "type": "Installation",
