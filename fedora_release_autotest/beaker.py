@@ -44,6 +44,11 @@ async def fetch_job_recipes(job_id: str):
     Fetch job status, return set of recipes in XML Element format
     return None on failure
     """
+    #temp check
+    if not job_id:
+        recipes = {}
+        logger.error('job_id should not be none')
+        return recipes
     recipes = []
     for _ in range(1440):  # Try to fetch for one day
         try:
