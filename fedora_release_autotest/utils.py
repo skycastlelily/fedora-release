@@ -30,6 +30,11 @@ def wiki_report(data, result):
         firmware = 'aarch64'
     vm_hw = data.get('vm_hw') or 'HW'
     if do_report:
+        testcases = []
+        if 'upgrade_dnf' in data["ts_name"] or data["ts_name"] == 'QA:Testcase_Install_to_Previous_KVM':
+            cid = data["real-distro"]
+        else:
+            cid = data["beaker-distro"]
         for key, value in conf_test_cases.TESTCASES.items():
             if key == data["ts_name"]:
                 changed = {}
@@ -46,13 +51,51 @@ def wiki_report(data, result):
                 section = changed["section"]
                 env = changed["env"]
                 testname = changed.get('name', '')
+                if 'Testcase_upgrade_dnf_current' in key:
+                    value_any = conf_test_cases.TESTCASES['QA:Testcase_upgrade_dnf_current_any']
+                    changed_any = {}
+                    for k, v in value_any.items():
+                        v = v.replace('$FIRMWARE$', firmware)
+                        v = v.replace('$RUNARCH$', arch)
+                        v = v.replace('$BOOTMETHOD$', bootmethod)
+                        v = v.replace('$SUBVARIANT$', subvariant)
+                        v = v.replace('$IMAGETYPE$', imagetype)
+                        v = v.replace('$VM_HW$', vm_hw)
+                        changed_any[k] = v
+                    testcase_any = 'QA:Testcase_upgrade_dnf_current_any'
+                    testtype_any = changed_any["type"]
+                    section_any = changed_any["section"]
+                    env_any = changed_any["env"]
+                    testname_any = changed_any.get('name', '')
+                    testcase_any = ResTuple(
+                        testtype=testtype, testcase=testcase_any, testname=testname, section=section,
+                        env=env, status=result, bot=True, cid=cid)
+                    testcases.append(testcase_any)
+                    logger.info("reporting test %s passes to %s", testcase_any, wiki_hostname)
+                if 'Testcase_upgrade_dnf_previous' in key:
+                    value_any = conf_test_cases.TESTCASES['QA:Testcase_upgrade_dnf_previous_any']
+                    changed_any = {}
+                    for k, v in value_any.items():
+                        v = v.replace('$FIRMWARE$', firmware)
+                        v = v.replace('$RUNARCH$', arch)
+                        v = v.replace('$BOOTMETHOD$', bootmethod)
+                        v = v.replace('$SUBVARIANT$', subvariant)
+                        v = v.replace('$IMAGETYPE$', imagetype)
+                        v = v.replace('$VM_HW$', vm_hw)
+                        changed_any[k] = v
+                    testcase_any = 'QA:Testcase_upgrade_dnf_previous_any'
+                    testtype_any = changed_any["type"]
+                    section_any = changed_any["section"]
+                    env_any = changed_any["env"]
+                    testname_any = changed_any.get('name', '')
+                    testcase_any = ResTuple(
+                        testtype=testtype, testcase=testcase_any, testname=testname, section=section,
+                        env=env, status=result, bot=True, cid=cid)
+                    testcases.append(testcase_any)
+                    logger.info("reporting test %s passes to %s", testcase_any, wiki_hostname)
                 break
                 # we only pass one testcase each time,so we break here to save time
-        testcases = []
-        if 'upgrade' in data["ts_name"] or data["ts_name"] == 'QA:Testcase_Install_to_Previous_KVM':
-            cid = data["real-distro"]
-        else:
-            cid = data["beaker-distro"]
+
         testcase = ResTuple(
             testtype=testtype, testcase=testcase, testname=testname, section=section,
             env=env, status=result, bot=True, cid=cid)
