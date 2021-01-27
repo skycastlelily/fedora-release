@@ -72,9 +72,7 @@ def consume_message(message):
 
 def populate_data(data):
 
-    driver_list = conf_test_cases.Driver_List
     ks_list = conf_test_cases.Ks_List
-    hw_testcases = conf_test_cases.Hw_TestCase
     data_list = []
     arch = data["cpu-arch"]
     base_http_url_rawhide = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
@@ -95,11 +93,6 @@ def populate_data(data):
         base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
         download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", data["cpu-arch"],
                 "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
-    for driver in driver_list:
-        temp = copy.deepcopy(data)
-        temp["device_drivers"] = driver
-        temp["ts_name"] = hw_testcases[driver]
-        data_list.append(temp)
     for ks_data in ks_list:
         (ts_name , params), = ks_data.items()
         temp = copy.deepcopy(data)

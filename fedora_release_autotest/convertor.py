@@ -113,8 +113,8 @@ def boilerplate_job(query: dict):
     # Group up jobs for better tracking and management
 
     whiteboard = etree.SubElement(job, 'whiteboard')
-    if query.get('device_description'):
-        whiteboard.text = query.get('ts_name')+' '+query.get('cpu-arch')+' '+query.get('device_description')
+    if query.get('boot_description'):
+        whiteboard.text = query.get('ts_name')+' '+query.get('cpu-arch')+' '+query.get('boot_description')
     else:
         whiteboard.text = query.get('ts_name')+' '+query.get('cpu-arch')
 
@@ -298,6 +298,11 @@ def fill_devices(root: Element, sanitized_query: dict):
         device_drivers = sanitized_query.get('device_drivers')
         device.set('op', 'like')
         device.set('driver', '%'+device_drivers+'%')
+    if sanitized_query.get('device_description'):
+        device = etree.SubElement(root, 'device')
+        device_description = sanitized_query.get('device_description')
+        device.set('op', 'like')
+        device.set('description', '%'+device_description+'%')
 
 
 def fill_host_requirements(host_requires: Element, sanitized_query: dict):
@@ -318,7 +323,7 @@ def fill_host_requirements(host_requires: Element, sanitized_query: dict):
         require.set("op", op)
         require.set("value", str(value))
 
-    if sanitized_query.get('device_description') == 'UEFI':
+    if sanitized_query.get('boot_description') == 'UEFI':
         add_requirement('NETBOOT_METHOD', '=', 'efigrub', is_extra=True)
     else:
         add_requirement('NETBOOT_METHOD', '!=', 'efigrub', is_extra=True)
@@ -409,7 +414,7 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task_param.set('name', 'RSTRNT_DISABLED')
         task_param.set('value', '01_dmesg_check 10_avc_check')
     if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_free_space_pre":
-        if sanitized_query.get('device_description') == 'UEFI' or sanitized_query.get('cpu-arch') == 'aarch64':
+        if sanitized_query.get('boot_description') == 'UEFI' or sanitized_query.get('cpu-arch') == 'aarch64':
             task = etree.SubElement(recipe, 'task')
             task.set('name', '/fedora/freespace-uefi/prepare')
             task.set('role', 'STANDALONE')
@@ -426,7 +431,7 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
             task_param.set('name', 'RSTRNT_DISABLED')
             task_param.set('value', '01_dmesg_check 10_avc_check')
     if sanitized_query["ts_name"] == "QA:Testcase_partitioning_guided_free_space":
-        if sanitized_query.get('device_description') == 'UEFI' or sanitized_query.get('cpu-arch') == 'aarch64':
+        if sanitized_query.get('boot_description') == 'UEFI' or sanitized_query.get('cpu-arch') == 'aarch64':
             task = etree.SubElement(recipe, 'task')
             task.set('name', '/fedora/freespace-uefi/task')
             task.set('role', 'STANDALONE')
@@ -484,8 +489,8 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
 
 def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
     # Some default params
-    if sanitized_query.get('device_description'):
-        whiteboard_sum = sanitized_query.get('ts_name')+' '+sanitized_query.get('cpu-arch')+' '+sanitized_query.get('device_description')
+    if sanitized_query.get('boot_description'):
+        whiteboard_sum = sanitized_query.get('ts_name')+' '+sanitized_query.get('cpu-arch')+' '+sanitized_query.get('boot_description')
     else:
         whiteboard_sum = sanitized_query.get('ts_name')+' '+sanitized_query.get('cpu-arch')
 

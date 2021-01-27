@@ -308,7 +308,7 @@ async def submit_function(data, recipe):
     job_str["target-host"] = recipe["system"]
     job_str["cpu-arch"] = data["cpu-arch"]
     job_str["beaker-distro"] = data["beaker-distro"]
-    job_str["device_description"] = data.get("device_description")
+    job_str["boot_description"] = data.get("boot_description")
     if job_str.get("ks_kickstart") == "REPLACE_THIS":
         subprocess.run("wget https://lnie.fedorapeople.org/bos-rawhide.ks -P /tmp/" , shell=True)
         subprocess.run("sed -i 's/REPLACE_THIS/%s/g' /tmp/bos-rawhide.ks" % data["beaker-distro"], shell=True)

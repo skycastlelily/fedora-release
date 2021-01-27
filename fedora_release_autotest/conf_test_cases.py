@@ -26,21 +26,21 @@ instances.
 Ks_List = [
     { "QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Server",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["beakerlib", ],
         }},
     {"QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Server",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         }},
     {"QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Everything",
         "packages": ["beakerlib", ],
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         }},
     { "QA:Testcase_Boot_default_install": {
         "beaker-distro_variant": "Everything",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         }},
     { "QA:Testcase_arm_image_deployment": {
         "beaker-distro_variant": "Server",
@@ -103,16 +103,44 @@ Ks_List = [
         "cpu-arch": "aarch64",
         }},
     {"QA:Testcase_install_to_NVMe": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "nvme"
+        }},
+    {"QA:Testcase_install_to_NVMe": {
         "cpu-arch": "aarch64",
+        "device_description": "NVMe"
+        }},
+    {"QA:Testcase_install_to_SATA": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "sata"
         }},
     {"QA:Testcase_install_to_SATA": {
         "cpu-arch": "aarch64",
+        "device_description": "SATA"
+        }},
+    {"QA:Testcase_install_to_SAS": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "sas"
         }},
     {"QA:Testcase_install_to_SAS": {
         "cpu-arch": "aarch64",
+        "device_drivers": "sas"
+        }},
+    {"QA:Testcase_install_to_SCSI": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "scsi"
+        }},
+    {"QA:Testcase_install_to_PATA": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "pata"
+        }},
+    {"QA:Testcase_install_to_hardware_RAID": {
+        "cpu-arch": "x86_64",
+        "device_drivers": "raid"
         }},
     {"QA:Testcase_install_to_hardware_RAID": {
         "cpu-arch": "aarch64",
+        "device_description": "RAID"
         }},
     { "QA:Testcase_install_to_VirtIO": {
         "cpu-arch": "x86_64",
@@ -128,14 +156,14 @@ Ks_List = [
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-arch": "x86_64",
         "cpu-flags": ["vmx", ],
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Previous_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
@@ -147,14 +175,14 @@ Ks_List = [
     {"QA:Testcase_Install_to_Current_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
     {"QA:Testcase_Install_to_Current_KVM": {
         "cpu-flags": ["vmx", ],
         "cpu-arch": "x86_64",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "disk-total_size": {"$gt": "50G"}
         }},
@@ -166,13 +194,13 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_delete_all": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type lvm",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         }},
     {"QA:Testcase_partitioning_guided_delete_all": {
         "ks_meta": "no_autopart",
         "packages": ["beakerlib", ],
         "ks_append": "autopart --type lvm",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         }},
     {"QA:Testcase_partitioning_guided_delete_all": {
         "ks_meta": "no_autopart",
@@ -182,7 +210,7 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_multi_select_pre": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
                      part /boot --fstype="xfs" --size=1024 --ondisk=sda
@@ -192,7 +220,7 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_multi_select_pre": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
                      part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
@@ -214,7 +242,7 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_free_space_pre": {
         "ks_meta": "no_autopart",
         "disk-total_size": {"$gt": "50G"},
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
                      part /boot --fstype="xfs" --size=1024 --ondisk=sda
@@ -224,7 +252,7 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_free_space_pre": {
         "ks_meta": "no_autopart",
         "disk-total_size": {"$gt": "50G"},
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["wget", "beakerlib"],
         "ks_append": """
                      part /boot/efi --fstype="xfs"  --size=1024 --ondisk=sda
@@ -246,12 +274,12 @@ Ks_List = [
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --encrypted --passphrase fedoratest123",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         }},
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
         "ks_append": "autopart --encrypted --passphrase fedoratest123",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         }},
     {"QA:Testcase_partitioning_guided_encrypted": {
         "ks_meta": "no_autopart",
@@ -263,14 +291,14 @@ Ks_List = [
         "ks_meta": "no_autopart",
         "packages": ["wget", "beakerlib"],
         "ks_append": "autopart --type lvm",
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         }},
     {"QA:Testcase_partitioning_guided_multi_empty_all": {
         "disk-number": {"$gt": "2"},
         "ks_meta": "no_autopart",
         "packages": ["wget", "beakerlib"],
         "ks_append": "autopart --type lvm",
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         }},
     {"QA:Testcase_partitioning_guided_multi_empty_all": {
         "disk-number": {"$gt": "2"},
@@ -280,7 +308,7 @@ Ks_List = [
         "cpu-arch": "aarch64",
         }},
     {"QA:Testcase_partitioning_custom_btrfs": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype="xfs"  --size=1024
@@ -290,7 +318,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_btrfs": {
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
@@ -313,7 +341,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype=ext4 --size=1024
@@ -321,7 +349,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_ext4": {
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
@@ -340,7 +368,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_lvm_ext4": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "ks_append": """
                      autopart --type lvm --fstype=ext4
@@ -348,7 +376,7 @@ Ks_List = [
         }},
     {"QA:Testcase_partitioning_custom_lvm_ext4": {
         "packages": ["beakerlib", ],
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "ks_meta": "no_autopart",
         "ks_append": """
                      autopart --type lvm --fstype=ext4
@@ -362,12 +390,12 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_lvmthin": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type thinp",
         }},
     {"QA:Testcase_partitioning_custom_lvmthin": {
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": "autopart --type thinp",
@@ -378,7 +406,7 @@ Ks_List = [
         "ks_append": "autopart --type thinp",
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "ks_append": """
                      part /boot --fstype=xfs
@@ -386,7 +414,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_standard_partition_xfs": {
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "packages": ["beakerlib", ],
         "ks_meta": "no_autopart",
         "ks_append": """
@@ -405,7 +433,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_with_swap": {
-        "device_description": "BIOS",
+        "boot_description": "BIOS",
         "ks_meta": "no_autopart",
         "packages": ["beakerlib", "restraint-rhts"],
         "ks_append": """
@@ -417,7 +445,7 @@ Ks_List = [
                      """
         }},
     {"QA:Testcase_partitioning_custom_with_swap": {
-        "device_description": "UEFI",
+        "boot_description": "UEFI",
         "ks_meta": "no_autopart",
         "packages": ["beakerlib", "restraint-rhts"],
         "ks_append": """
@@ -572,18 +600,6 @@ Ks_List_Two = [
     },
 
 ]
-
-Driver_List = ["nvme", "pata", "sata", "raid", "scsi", "sas"]
-
-
-Hw_TestCase = {
-    "nvme": "QA:Testcase_install_to_NVMe",
-    "pata": "QA:Testcase_install_to_PATA",
-    "sata": "QA:Testcase_install_to_SATA",
-    "scsi": "QA:Testcase_install_to_SCSI",
-    "sas": "QA:Testcase_install_to_SAS",
-    "raid": "QA:Testcase_install_to_hardware_RAID",
-}
 
 TESTCASES = {
     # the following strings in values will be replaced with strings

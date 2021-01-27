@@ -19,10 +19,10 @@ def wiki_report(data, result):
         subvariant = data.get('real-distro_variant') or 'Server'
     else:
         subvariant = data.get('beaker-distro_variant') or 'Server'
-    if data.get('device_description') == 'BIOS':
+    if data.get('boot_description') == 'BIOS':
         bootmethod = 'x86_64 BIOS'
         firmware = 'BIOS'
-    elif data.get('device_description') == 'UEFI':
+    elif data.get('boot_description') == 'UEFI':
         bootmethod = 'x86_64 UEFI'
         firmware = 'UEFI'
     if data.get('cpu-arch') == 'aarch64':
