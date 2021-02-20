@@ -42,60 +42,6 @@ Ks_List = [
         "beaker-distro_variant": "Everything",
         "boot_description": "BIOS",
         }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Server",
-        "cpu-arch": "aarch64",
-        "vm_hw": "HW",
-        }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Everything",
-        "real-distro_variant": "Minimal",
-        "cpu-arch": "aarch64",
-        "vm_hw": "HW",
-        "ks_append": """
-                     %packages
-                     @^minimal-environment
-                     %end
-                     """
-        }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Everything",
-        "real-distro_variant": "Workstation",
-        "cpu-arch": "aarch64",
-        "vm_hw": "HW",
-        "ks_append": """
-                     %packages
-                     @^workstation-product-environment
-                     %end
-                     """
-        }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Server",
-        "cpu-arch": "aarch64",
-        "vm_hw": "VM",
-        }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Everything",
-        "real-distro_variant": "Minimal",
-        "cpu-arch": "aarch64",
-        "vm_hw": "VM",
-        "ks_append": """
-                     %packages
-                     @^minimal-environment
-                     %end
-                     """
-        }},
-    { "QA:Testcase_arm_image_deployment": {
-        "beaker-distro_variant": "Everything",
-        "real-distro_variant": "Workstation",
-        "cpu-arch": "aarch64",
-        "vm_hw": "VM",
-        "ks_append": """
-                     %packages
-                     @^workstation-product-environment
-                     %end
-                     """
-        }},
     {"QA:Testcase_Boot_Methods_Pxeboot": {
         "cpu-arch": "x86_64",
         }},

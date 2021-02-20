@@ -77,6 +77,8 @@ def populate_data(data):
     arch = data["cpu-arch"]
     base_http_url_rawhide = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
     base_nfs_url_rawhide = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
+    base_http_url_branch = "http://download.eng.brq.redhat.com/pub/fedora/fedmsg/dumpdata/"
+    base_nfs_url_branch = "nfs://ntap-brq2-c01-eng01-nfs-a.storage.eng.brq2.redhat.com:/pub/fedora/fedmsg/dumpdata/"
     base_released_url = "http://download.eng.bos.redhat.com/released/fedora"
     base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
     release_str = re.split('-', data["beaker-distro"])[1]
@@ -93,6 +95,8 @@ def populate_data(data):
         base_url = "https://kojipkgs.fedoraproject.org/compose/branched/"
         download_url = os.path.join(base_url, data["beaker-distro"], "compose/Server", data["cpu-arch"],
                 "iso", "Fedora-Server-dvd-%s-%s-%s.iso")%(arch, release_str, compose_name)
+        http_url = os.path.join(base_http_url_branch, data["beaker-distro"], "Server", data["cpu-arch"], "os")
+        nfs_url = os.path.join(base_nfs_url_branch, data["beaker-distro"], "Server", data["cpu-arch"], "os")
     for ks_data in ks_list:
         (ts_name , params), = ks_data.items()
         temp = copy.deepcopy(data)
