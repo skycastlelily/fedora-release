@@ -113,7 +113,7 @@ def populate_data(data):
                                  wget %s -P /var/lib/libvirt/images/
                                  %%end
                                  """%download_url
-        if ts_name == "QA:Testcase_Install_to_Current_KVM" or ts_name == "QA:Testcase_install_to_VirtIO":
+        if ts_name == "QA:Testcase_Install_to_Current_KVM" or ts_name == "QA:Testcase_install_to_VirtIO" or ts_name =="QA:Testcase_partitioning_custom_software_RAID":
             temp['ks_append'] = """
                                  %%post
                                  wget %s -P /var/lib/libvirt/images/

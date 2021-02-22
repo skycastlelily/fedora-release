@@ -335,6 +335,23 @@ Ks_List = [
                      autopart --type lvm --fstype=ext4
                      """
         }},
+    {"QA:Testcase_partitioning_custom_software_RAID": {
+        "cpu-flags": ["vmx", ],
+        "boot_description": "BIOS",
+        "packages": ["wget", "beakerlib"],
+        "disk-total_size": {"$gt": "100G"}
+        }},
+    {"QA:Testcase_partitioning_custom_software_RAID": {
+        "cpu-flags": ["vmx", ],
+        "boot_description": "UEFI",
+        "packages": ["wget", "beakerlib"],
+        "disk-total_size": {"$gt": "100G"}
+        }},
+    {"QA:Testcase_partitioning_custom_software_RAID": {
+        "cpu-arch": "aarch64",
+        "packages": ["wget", "beakerlib"],
+        "disk-total_size": {"$gt": "100G"}
+        }},
     {"QA:Testcase_partitioning_custom_lvmthin": {
         "boot_description": "BIOS",
         "ks_meta": "no_autopart",

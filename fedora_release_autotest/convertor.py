@@ -479,6 +479,14 @@ def add_reserve_task(recipe: Element, sanitized_query: dict):
         task_param = etree.SubElement(task_params, 'param')
         task_param.set('name', 'RSTRNT_DISABLED')
         task_param.set('value', '01_dmesg_check 10_avc_check')
+    if sanitized_query["ts_name"] == "QA:Testcase_partitioning_custom_software_RAID":
+        task = etree.SubElement(recipe, 'task')
+        task.set('name', '/fedora/virt/softraid-install')
+        task.set('role', 'STANDALONE')
+        task_params = etree.SubElement(task, 'params')
+        task_param = etree.SubElement(task_params, 'param')
+        task_param.set('name', 'RSTRNT_DISABLED')
+        task_param.set('value', '01_dmesg_check 10_avc_check')
 
     
     #reserve = etree.SubElement(recipe, 'reservesys')
