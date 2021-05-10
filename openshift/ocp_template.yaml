@@ -11,9 +11,9 @@ objects:
     name: fedora-release-autotest
   spec:
     ports:
-    - port: 5671
+    - port: 5000
       protocol: TCP
-      targetPort: 8055
+      targetPort: 5671
     selector:
       fedora-release-autotest: default
     sessionAffinity: ClientIP
@@ -51,11 +51,12 @@ objects:
           fedora-release-autotest: default
       spec:
         containers:
+        - args:
           image: fedora-release-autotest
           imagePullPolicy: Always
           name: fedora-release-autotest
           ports:
-          - containerPort: 8055
+          - containerPort: 5671
             protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -75,7 +76,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: fedora-release-autotest:latest
-          namespace: libvirt-ci
+          namespace: fedora-release-autotest
       type: ImageChange
 - apiVersion: v1
   kind: BuildConfig
@@ -98,6 +99,8 @@ objects:
       git:
         ref: master
         uri: https://pagure.io/fedora-qa/fedora-release-autotest.git
+      sourceSecret:
+        name: gitlab-webhook
       type: Git
     strategy:
       dockerStrategy:
@@ -111,6 +114,9 @@ objects:
     - gitlab:
         secret: gitlab-webhook
       type: GitLab
+    - generic:
+        secret: gitlab-webhook
+      type: Generic
   status:
     lastVersion: 0
 - apiVersion: v1
@@ -119,7 +125,7 @@ objects:
     creationTimestamp: null
     name: fedora-release-autotest
   spec:
-    host: fedora-release-autotest.api.ocp4.prod.psi.redhat.com
+    host: fedora-release-autotest.apps.ocp4.prod.psi.redhat.com
     path: /
     to:
       kind: Service
