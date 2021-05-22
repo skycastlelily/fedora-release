@@ -504,6 +504,7 @@ def fill_boilerplate_recipe(recipe: Element, sanitized_query: dict):
 
     recipe.set('whiteboard', whiteboard_sum)  # TODO
     recipe.set('role', 'None')
+    recipe.set('kernel_options', 'ip=dhcp')
 
     # Some default params
     if sanitized_query.get('ks_meta'):
